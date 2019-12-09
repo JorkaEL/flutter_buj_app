@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
+class TaskPage extends StatefulWidget {
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _TaskPageState createState() => _TaskPageState();
 }
 
 
-class _HomePageState extends State {
+class _TaskPageState extends State {
 
   @override
   void initState() {

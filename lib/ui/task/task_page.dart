@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_buj_app/ui/component/side_menu.component.dart';
 
 class TaskPage extends StatefulWidget {
 
@@ -20,34 +21,9 @@ class _TaskPageState extends State {
         appBar: AppBar(
           backgroundColor: Colors.purple,
           centerTitle: true,
-          title: Text('Home')
+          title: Text('Taches')
         ),
-      drawer: Drawer(
-        child: ListView(
-            children: <Widget>[
-              DrawerHeader(
-                child: Center(child: Text('WIP')),
-                decoration: BoxDecoration(
-                  color: Colors.purple,
-                ),
-              ),
-              ListTile(
-                title: Center(child:Text('Home')),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                },
-              ),
-              ListTile(
-                title: Center(child:Text('Habitudes')),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                },
-              ),
-            ]
-        ),
-      ),
+      drawer: SideMenu()
     );
   }
 

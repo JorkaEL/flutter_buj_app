@@ -1,7 +1,7 @@
 import 'package:flutter_buj_app/model/key.dart';
 import 'package:flutter_buj_app/model/tracker.dart';
 
-class Tache {
+class Task {
 
   num id;
   String libelle;
@@ -10,6 +10,6 @@ class Tache {
   bool state;
   String date;
 
-  Tache({this.id, this.libelle, this.key, this.tracker, this.state, this.date});
+  Task({this.id, this.libelle, this.key, this.tracker, this.state, this.date});
 
 }

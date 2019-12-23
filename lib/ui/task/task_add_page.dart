@@ -1,8 +1,11 @@
-import 'dart:developer';
-
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_buj_app/model/task.dart';
+import 'package:flutter_buj_app/model/tracker.dart';
+import 'package:flutter_buj_app/model/key_task.dart';
+import 'package:flutter_buj_app/util/buj_service.dart';
+import 'package:flutter_buj_app/util/routing_constants.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 
@@ -20,8 +23,16 @@ class _TaskAddState extends State<TaskAddPage> {
   final _formKey = GlobalKey<FormState>();
   final format = DateFormat("yyyy-MM-dd");
 
+
   final libelle = TextEditingController();
   final date = TextEditingController();
+
+  KeyTask keyChoice;
+  List<KeyTask> keyList = BujService().getKeyTask();
+
+  Tracker trackerChoice;
+  List<Tracker> trackerList = BujService().getTrackers();
+
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +64,9 @@ class _TaskAddState extends State<TaskAddPage> {
               format: format,
               controller: this.date,
               validator: (value) {
-                if(value != null) {
+                logger.v(value);
+                logger.v(date.text);
+                if(value.toString().length == 0) {
                   return 'SVP choisiez une date';
                 }
                 return null;
@@ -68,15 +81,48 @@ class _TaskAddState extends State<TaskAddPage> {
                 return date;
               },
             ),
+            DropdownButton<KeyTask>(
+              hint: Text('Selectionné votre cléé'),
+              value: keyChoice,
+              onChanged: (KeyTask key) {
+                setState(() {
+                  keyChoice = key;
+                });
+              },
+              items: keyList.map((KeyTask key) {
+                return new DropdownMenuItem<KeyTask>(
+                  value: key,
+                  child: Text(key.libelle),
+                );
+              }).toList(),
+            ),
+            DropdownButton<Tracker>(
+              hint: Text('Selectionné votre tracker'),
+              value: trackerChoice,
+              onChanged: (Tracker tra) {
+                setState(() {
+                  trackerChoice = tra;
+                });
+              },
+              items: trackerList.map((Tracker tra) {
+                return new DropdownMenuItem<Tracker>(
+                  value: tra,
+                  child: Text(tra.libelle),
+                );
+              }).toList(),
+            ),
             Padding(
               padding: EdgeInsets.all(16.0),
               child: RaisedButton(
                 onPressed: () {
                   // Validate will return true if the form is valid, or false if
                   // the form is invalid.
-                  logger.v('value = ' + this.libelle.text + ' date = '+ this.date.text);
+                  // logger.v('value = ' + this.libelle.text + ' date = '+ this.date.text);
                   if (_formKey.currentState.validate()) {
                     // Process data
+                    var t = Task(libelle: this.libelle.text, date: this.date.text, id: 0, state: false, tracker: this.trackerChoice, key: this.keyChoice );
+                    BujService().addTask(t);
+                    Navigator.pushNamed(context, TaskPageRoute);
                   }
                 },
                 child: Text('Valider'),

@@ -1,11 +1,11 @@
-import 'package:flutter_buj_app/model/key.dart';
+import 'package:flutter_buj_app/model/key_task.dart';
 import 'package:flutter_buj_app/model/tracker.dart';
 
 class Task {
 
   num id;
   String libelle;
-  Key key;
+  KeyTask key;
   Tracker tracker;
   bool state;
   String date;

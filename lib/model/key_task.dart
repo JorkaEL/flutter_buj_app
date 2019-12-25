@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
+
 class KeyTask {
   num id;
   String libelle;
-  String icon;
+  Icon icon;
 
   KeyTask({this.id, this.libelle, this.icon});
 }

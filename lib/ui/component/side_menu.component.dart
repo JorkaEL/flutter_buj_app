@@ -10,7 +10,7 @@ class SideMenu extends StatelessWidget {
       child: ListView(
           children: <Widget>[
             DrawerHeader(
-              child: Center(child: Text('WIP')),
+              child: Center(child: Text('BUJ')),
               decoration: BoxDecoration(
                 color: Colors.purple,
               ),

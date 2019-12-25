@@ -31,4 +31,12 @@ class BujService {
     return listKeyTask;
   }
 
+  addKeyTask(KeyTask k) {
+    listKeyTask.add(k);
+  }
+
+  addTracker(Tracker t) {
+    listTracker.add(t);
+  }
+
 }

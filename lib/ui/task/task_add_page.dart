@@ -40,7 +40,7 @@ class _TaskAddState extends State<TaskAddPage> {
       appBar: AppBar(
           backgroundColor: Colors.purple,
           centerTitle: true,
-          title: Text('Taches')
+          title: Text('Ajout de tache')
       ),
         body: Form(
         key: _formKey,
@@ -81,43 +81,70 @@ class _TaskAddState extends State<TaskAddPage> {
                 return date;
               },
             ),
-            DropdownButton<KeyTask>(
-              hint: Text('Selectionné votre cléé'),
-              value: keyChoice,
-              onChanged: (KeyTask key) {
-                setState(() {
-                  keyChoice = key;
-                });
-              },
-              items: keyList.map((KeyTask key) {
-                return new DropdownMenuItem<KeyTask>(
-                  value: key,
-                  child: Text(key.libelle),
-                );
-              }).toList(),
+            Flexible(
+              child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    DropdownButton<KeyTask>(
+                      hint: Text('Selectionné votre cléé'),
+                      value: keyChoice,
+                      onChanged: (KeyTask key) {
+                        setState(() {
+                          keyChoice = key;
+                        });
+                      },
+                      items: keyList.map((KeyTask key) {
+                        return new DropdownMenuItem<KeyTask>(
+                          value: key,
+                          child: Text(key.libelle),
+                        );
+                      }).toList(),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.add_circle),
+                      tooltip: 'Ajouter une clée',
+                      onPressed: () {
+                       Navigator.pushNamed(context, KeyTaskAddPageRoute);
+                      },
+                    ),
+                  ],
+              ),
             ),
-            DropdownButton<Tracker>(
-              hint: Text('Selectionné votre tracker'),
-              value: trackerChoice,
-              onChanged: (Tracker tra) {
-                setState(() {
-                  trackerChoice = tra;
-                });
-              },
-              items: trackerList.map((Tracker tra) {
-                return new DropdownMenuItem<Tracker>(
-                  value: tra,
-                  child: Text(tra.libelle),
-                );
-              }).toList(),
+            Flexible(
+              child: Row(
+                children: <Widget>[
+                  DropdownButton<Tracker>(
+                    hint: Text('Selectionné votre tracker'),
+                    value: trackerChoice,
+                    onChanged: (Tracker tra) {
+                      setState(() {
+                        trackerChoice = tra;
+                      });
+                    },
+                    items: trackerList.map((Tracker tra) {
+                      return new DropdownMenuItem<Tracker>(
+                        value: tra,
+                        child: Text(tra.libelle),
+                      );
+                    }).toList(),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.add_circle),
+                    tooltip: 'Ajouter une clée',
+                    onPressed: () {
+                      Navigator.pushNamed(context, KeyTaskAddPageRoute);
+                    },
+                  ),
+                ],
+              ),
             ),
+
             Padding(
               padding: EdgeInsets.all(16.0),
               child: RaisedButton(
                 onPressed: () {
                   // Validate will return true if the form is valid, or false if
                   // the form is invalid.
-                  // logger.v('value = ' + this.libelle.text + ' date = '+ this.date.text);
                   if (_formKey.currentState.validate()) {
                     // Process data
                     var t = Task(libelle: this.libelle.text, date: this.date.text, id: 0, state: false, tracker: this.trackerChoice, key: this.keyChoice );

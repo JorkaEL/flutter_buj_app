@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_buj_app/ui/habit/habit_page.dart';
 import 'package:flutter_buj_app/ui/home/home_page.dart';
+import 'package:flutter_buj_app/ui/key_task/key_task_add_page.dart';
 import 'package:flutter_buj_app/ui/task/task_add_page.dart';
 import 'package:flutter_buj_app/ui/task/task_page.dart';
 import 'package:flutter_buj_app/ui/undefined/undefined_view.dart';
@@ -15,6 +16,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => TaskPage());
     case TaskAddPageRoute:
       return MaterialPageRoute(builder: (context) => TaskAddPage());
+    case KeyTaskAddPageRoute:
+      return MaterialPageRoute(builder: (context) => KeyTaskAddPage());
     case HabitPageRoute:
       return MaterialPageRoute(builder: (context) => HabitPage());
     default:

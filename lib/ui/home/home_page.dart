@@ -1,54 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_buj_app/ui/task/task_page.dart';
 
-class HomePage extends StatefulWidget {
-
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-
-class _HomePageState extends State {
+class HomePage extends StatelessWidget {
 
   @override
-  void initState() {
-    super.initState();
+  build(BuildContext context) {
+    return TaskPage();
   }
-
-  @override build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.purple,
-          centerTitle: true,
-          title: Text('Home')
-        ),
-      drawer: Drawer(
-        child: ListView(
-            children: <Widget>[
-              DrawerHeader(
-                child: Center(child: Text('WIP')),
-                decoration: BoxDecoration(
-                  color: Colors.purple,
-                ),
-              ),
-              ListTile(
-                title: Center(child:Text('Home')),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                },
-              ),
-              ListTile(
-                title: Center(child:Text('Habitudes')),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                },
-              ),
-            ]
-        ),
-      ),
-    );
-  }
-
 }

@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
+
 class Tracker {
   num id;
   String libelle;
-  String color;
+  MaterialColor color;
 
   Tracker({this.id, this.libelle, this.color});
 }

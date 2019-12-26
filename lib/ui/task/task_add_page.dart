@@ -61,12 +61,14 @@ class _TaskAddState extends State<TaskAddPage> {
                 },
               ),
             DateTimeField(
+              decoration: InputDecoration(
+                hintText: 'Date de la tache'
+              ),
               format: format,
               controller: this.date,
               validator: (value) {
-                logger.v(value);
-                logger.v(date.text);
-                if(value.toString().length == 0) {
+                // logger.v(value);
+                if(value == null) {
                   return 'SVP choisiez une date';
                 }
                 return null;
@@ -130,9 +132,9 @@ class _TaskAddState extends State<TaskAddPage> {
                   ),
                   IconButton(
                     icon: Icon(Icons.add_circle),
-                    tooltip: 'Ajouter une clée',
+                    tooltip: 'Ajouter un tracker',
                     onPressed: () {
-                      Navigator.pushNamed(context, KeyTaskAddPageRoute);
+                      Navigator.pushNamed(context, TrackerAddPageRoute);
                     },
                   ),
                 ],
@@ -145,7 +147,7 @@ class _TaskAddState extends State<TaskAddPage> {
                 onPressed: () {
                   // Validate will return true if the form is valid, or false if
                   // the form is invalid.
-                  if (_formKey.currentState.validate()) {
+                  if (_formKey.currentState.validate() && this.keyChoice != null && this.trackerChoice != null) {
                     // Process data
                     var t = Task(libelle: this.libelle.text, date: this.date.text, id: 0, state: false, tracker: this.trackerChoice, key: this.keyChoice );
                     BujService().addTask(t);

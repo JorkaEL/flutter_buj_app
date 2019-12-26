@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_buj_app/model/key_task.dart';
+import 'package:flutter_buj_app/model/tracker.dart';
 import 'package:flutter_buj_app/util/buj_service.dart';
 import 'package:flutter_buj_app/util/routing_constants.dart';
 
-class KeyTaskAddPage extends StatefulWidget {
+class TrackerAddPage extends StatefulWidget {
 
   @override
-  _KeyTaskAddState createState() => _KeyTaskAddState();
+  _TrackerAddState createState() => _TrackerAddState();
 
 }
 
-class _KeyTaskAddState extends State<KeyTaskAddPage> {
+class _TrackerAddState extends State<TrackerAddPage> {
 
   final _formKey = GlobalKey<FormState>();
 
@@ -23,7 +23,7 @@ class _KeyTaskAddState extends State<KeyTaskAddPage> {
       appBar: AppBar(
           backgroundColor: Colors.purple,
           centerTitle: true,
-          title: Text('Ajout de clée')
+          title: Text('Ajout d\'un tracker'),
       ),
       body: Form(
           key: _formKey,
@@ -33,12 +33,12 @@ class _KeyTaskAddState extends State<KeyTaskAddPage> {
               TextFormField(
                 controller: this.libelle,
                 decoration: const InputDecoration(
-                  hintText: 'Libéller de la clée',
+                  hintText: 'Libéller du tracker',
                 ),
                 // The validator receives the text that the user has entered.
                 validator: (value) {
                   if (value.isEmpty) {
-                    return 'SVP rentrer un libéller pour la clée';
+                    return 'SVP rentrer un libéller pour le tracker';
                   }
                   return null;
                 },
@@ -51,9 +51,9 @@ class _KeyTaskAddState extends State<KeyTaskAddPage> {
                     // the form is invalid.
                     if (_formKey.currentState.validate()) {
                       // Process data
-                      // TODO select icon
-                      var key = KeyTask(libelle: this.libelle.text, icon: Icons.extension);
-                      BujService().addKeyTask(key);
+                      // TODO select color
+                      var tracker = Tracker(libelle: this.libelle.text, color: Colors.red );
+                      BujService().addTracker(tracker);
                       Navigator.pushNamed(context, TaskAddPageRoute);
                     }
                   },

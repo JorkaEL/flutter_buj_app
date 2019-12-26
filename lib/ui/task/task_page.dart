@@ -33,9 +33,21 @@ class _TaskPageState extends State {
       body: ListView.separated(
         itemCount: myTask.length,
         separatorBuilder: (context, index) => Divider(),
-        itemBuilder: (context, index) => Text(myTask[index].libelle)
+        itemBuilder: (context, index) => ListTile(
+            leading: IconButton(
+              icon: Icon(myTask[index].state ? Icons.check_box : Icons.check_box_outline_blank),
+              onPressed: () {
+                setState(() {
+                  myTask[index].state = !myTask[index].state;
+                });
+              },
+            ),
+            title:  Text(myTask[index].libelle),
+            trailing: Icon(myTask[index].key.icon, color: myTask[index].tracker.color),
+          ),
         ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.purple,
         onPressed: () {
           Navigator.pushNamed(context, TaskAddPageRoute);
         },

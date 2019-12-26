@@ -5,6 +5,7 @@ import 'package:flutter_buj_app/ui/home/home_page.dart';
 import 'package:flutter_buj_app/ui/key_task/key_task_add_page.dart';
 import 'package:flutter_buj_app/ui/task/task_add_page.dart';
 import 'package:flutter_buj_app/ui/task/task_page.dart';
+import 'package:flutter_buj_app/ui/tracker/tracker_add_page.dart';
 import 'package:flutter_buj_app/ui/undefined/undefined_view.dart';
 import 'package:flutter_buj_app/util/routing_constants.dart';
 
@@ -18,6 +19,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => TaskAddPage());
     case KeyTaskAddPageRoute:
       return MaterialPageRoute(builder: (context) => KeyTaskAddPage());
+    case TrackerAddPageRoute:
+      return MaterialPageRoute(builder: (context) => TrackerAddPage());
     case HabitPageRoute:
       return MaterialPageRoute(builder: (context) => HabitPage());
     default:

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class KeyTask {
   num id;
   String libelle;
-  Icon icon;
+  IconData icon;
 
   KeyTask({this.id, this.libelle, this.icon});
 }

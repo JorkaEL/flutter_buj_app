@@ -19,16 +19,11 @@ class _HabitPageState extends State {
   @override build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            backgroundColor: Colors.purple,
+            backgroundColor: Colors.deepPurple,
             centerTitle: true,
             title: Text('Habitudes')
         ),
         drawer: SideMenu(),
-      body: Container(
-        color: Colors.red,
-        height: 50,
-        width: 50,
-      ),
     );
   }
 

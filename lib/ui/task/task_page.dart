@@ -25,7 +25,7 @@ class _TaskPageState extends State {
   @override build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.purple,
+          backgroundColor: Colors.deepPurple,
           centerTitle: true,
           title: Text('Taches')
         ),
@@ -47,7 +47,7 @@ class _TaskPageState extends State {
           ),
         ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.purple,
+        backgroundColor: Colors.deepPurple,
         onPressed: () {
           Navigator.pushNamed(context, TaskAddPageRoute);
         },

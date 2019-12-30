@@ -14,7 +14,7 @@ class BujService {
 
   final List<Task> listTask = [];
   final List<KeyTask> listKeyTask = [];
-  final List<Tracker> listTracker = [Tracker(id: 0, color: Colors.purple, libelle: 'aucun')];
+  final List<Tracker> listTracker = [Tracker(id: 0, color: Colors.grey, libelle: 'aucun')];
 
   addTask(Task t) {
     listTask.add(t);

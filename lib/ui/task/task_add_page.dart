@@ -38,126 +38,140 @@ class _TaskAddState extends State<TaskAddPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.purple,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.pushNamed(context, TaskPageRoute)
+          ),
+          backgroundColor: Colors.deepPurple,
           centerTitle: true,
           title: Text('Ajout de tache')
       ),
         body: Form(
         key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
+        child: Container(
+          padding: EdgeInsetsDirectional.only(start: 15.0, top: 5.0, end: 15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
               TextFormField(
-                controller: this.libelle,
-                decoration: const InputDecoration(
-                  hintText: 'Libéller de la tache',
+                  controller: this.libelle,
+                  decoration: const InputDecoration(
+                    hintText: 'Libéller de la tache',
+                  ),
+                // The validator receives the text that the user has entered.
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'SVP rentrer un libéller pour la tache';
+                    }
+                    return null;
+                  },
                 ),
-              // The validator receives the text that the user has entered.
+              DateTimeField(
+                decoration: InputDecoration(
+                  hintText: 'Date de la tache'
+                ),
+                cursorColor: Colors.deepPurple,
+                format: format,
+                controller: this.date,
                 validator: (value) {
-                  if (value.isEmpty) {
-                    return 'SVP rentrer un libéller pour la tache';
+                  // logger.v(value);
+                  if(value == null) {
+                    return 'SVP choisiez une date';
                   }
                   return null;
                 },
-              ),
-            DateTimeField(
-              decoration: InputDecoration(
-                hintText: 'Date de la tache'
-              ),
-              format: format,
-              controller: this.date,
-              validator: (value) {
-                // logger.v(value);
-                if(value == null) {
-                  return 'SVP choisiez une date';
-                }
-                return null;
-              },
-              onShowPicker: (context, currentValue) async {
-                final date = await showDatePicker(
-                    context: context,
-                    firstDate: DateTime(1900),
-                    initialDate: currentValue ?? DateTime.now(),
-                    lastDate: DateTime(2100));
+                onShowPicker: (context, currentValue) async {
+                  final date = await showDatePicker(
+                      context: context,
+                      firstDate: DateTime(1900),
+                      initialDate: currentValue ?? DateTime.now(),
+                      lastDate: DateTime(2100));
 
-                return date;
-              },
-            ),
-            Flexible(
-              child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  return date;
+                },
+              ),
+              Flexible(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      DropdownButton<KeyTask>(
+                        hint: Text('Selectionné votre cléé'),
+                        value: keyChoice,
+                        onChanged: (KeyTask key) {
+                          setState(() {
+                            keyChoice = key;
+                          });
+                        },
+                        items: keyList.map((KeyTask key) {
+                          return new DropdownMenuItem<KeyTask>(
+                            value: key,
+                            child: Text(key.libelle),
+                          );
+                        }).toList(),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.add_circle),
+                        color: Colors.deepPurple,
+                        tooltip: 'Ajouter une clée',
+                        onPressed: () {
+                         Navigator.pushNamed(context, KeyTaskAddPageRoute);
+                        },
+                      ),
+                    ],
+                ),
+              ),
+              Flexible(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    DropdownButton<KeyTask>(
-                      hint: Text('Selectionné votre cléé'),
-                      value: keyChoice,
-                      onChanged: (KeyTask key) {
+                    DropdownButton<Tracker>(
+                      hint: Text('Selectionné votre tracker'),
+                      value: trackerChoice,
+                      onChanged: (Tracker tra) {
                         setState(() {
-                          keyChoice = key;
+                          trackerChoice = tra;
                         });
                       },
-                      items: keyList.map((KeyTask key) {
-                        return new DropdownMenuItem<KeyTask>(
-                          value: key,
-                          child: Text(key.libelle),
+                      items: trackerList.map((Tracker tra) {
+                        return new DropdownMenuItem<Tracker>(
+                          value: tra,
+                          child: Text(tra.libelle),
                         );
                       }).toList(),
                     ),
                     IconButton(
                       icon: Icon(Icons.add_circle),
-                      tooltip: 'Ajouter une clée',
+                      color: Colors.deepPurple,
+                      tooltip: 'Ajouter un tracker',
                       onPressed: () {
-                       Navigator.pushNamed(context, KeyTaskAddPageRoute);
+                        Navigator.pushNamed(context, TrackerAddPageRoute);
                       },
                     ),
                   ],
+                ),
               ),
-            ),
-            Flexible(
-              child: Row(
-                children: <Widget>[
-                  DropdownButton<Tracker>(
-                    hint: Text('Selectionné votre tracker'),
-                    value: trackerChoice,
-                    onChanged: (Tracker tra) {
-                      setState(() {
-                        trackerChoice = tra;
-                      });
-                    },
-                    items: trackerList.map((Tracker tra) {
-                      return new DropdownMenuItem<Tracker>(
-                        value: tra,
-                        child: Text(tra.libelle),
-                      );
-                    }).toList(),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.add_circle),
-                    tooltip: 'Ajouter un tracker',
-                    onPressed: () {
-                      Navigator.pushNamed(context, TrackerAddPageRoute);
-                    },
-                  ),
-                ],
-              ),
-            ),
 
-            Padding(
-              padding: EdgeInsets.all(16.0),
-              child: RaisedButton(
-                onPressed: () {
-                  // Validate will return true if the form is valid, or false if
-                  // the form is invalid.
-                  if (_formKey.currentState.validate() && this.keyChoice != null && this.trackerChoice != null) {
-                    // Process data
-                    var t = Task(libelle: this.libelle.text, date: this.date.text, id: 0, state: false, tracker: this.trackerChoice, key: this.keyChoice );
-                    BujService().addTask(t);
-                    Navigator.pushNamed(context, TaskPageRoute);
-                  }
-                },
-                child: Text('Valider'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  RaisedButton(
+                    color: Colors.deepPurple,
+                    textColor: Colors.white,
+                    onPressed: () {
+                      // Validate will return true if the form is valid, or false if
+                      // the form is invalid.
+                      if (_formKey.currentState.validate() && this.keyChoice != null && this.trackerChoice != null) {
+                        // Process data
+                        var t = Task(libelle: this.libelle.text, date: this.date.text, id: 0, state: false, tracker: this.trackerChoice, key: this.keyChoice );
+                        BujService().addTask(t);
+                        Navigator.pushNamed(context, TaskPageRoute);
+                      }
+                    },
+                    child: Text('Valider'),
+                ),]
               ),
-            ),
-          ],
+            ],
+          )
         )// Build this out in the next steps.
       ),
     );

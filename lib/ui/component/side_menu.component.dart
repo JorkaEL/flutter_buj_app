@@ -12,7 +12,7 @@ class SideMenu extends StatelessWidget {
             DrawerHeader(
               child: Center(child: Text('BUJ')),
               decoration: BoxDecoration(
-                color: Colors.purple,
+                color: Colors.deepPurple,
               ),
             ),
             ListTile(

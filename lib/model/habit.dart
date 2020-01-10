@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class Tracker {
+class Habit {
   num id;
   String libelle;
   MaterialColor color;
 
-  Tracker({this.id, this.libelle, this.color});
+  Habit({this.id, this.libelle, this.color});
 }

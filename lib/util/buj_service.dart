@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_buj_app/model/key_task.dart';
 import 'package:flutter_buj_app/model/task.dart';
-import 'package:flutter_buj_app/model/tracker.dart';
+import 'package:flutter_buj_app/model/habit.dart';
 
 class BujService {
   BujService._internal();
@@ -14,7 +14,7 @@ class BujService {
 
   final List<Task> listTask = [];
   final List<KeyTask> listKeyTask = [];
-  final List<Tracker> listTracker = [Tracker(id: 0, color: Colors.grey, libelle: 'aucun')];
+  final List<Habit> listTracker = [Habit(id: 0, color: Colors.grey, libelle: 'aucun')];
 
   addTask(Task t) {
     listTask.add(t);
@@ -24,7 +24,7 @@ class BujService {
     return listTask;
   }
 
-  List<Tracker> getTrackers() {
+  List<Habit> getHabits() {
     return listTracker;
   }
 
@@ -36,8 +36,8 @@ class BujService {
     listKeyTask.add(k);
   }
 
-  addTracker(Tracker t) {
-    listTracker.add(t);
+  addHabit(Habit h) {
+    listTracker.add(h);
   }
 
 }

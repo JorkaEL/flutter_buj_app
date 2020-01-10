@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_buj_app/model/tracker.dart';
+import 'package:flutter_buj_app/model/habit.dart';
 import 'package:flutter_buj_app/util/buj_service.dart';
 import 'package:flutter_buj_app/util/listColor_service.dart';
 import 'package:flutter_buj_app/util/routing_constants.dart';
 
-class TrackerAddPage extends StatefulWidget {
+class HabitAddPage extends StatefulWidget {
 
   @override
-  _TrackerAddState createState() => _TrackerAddState();
+  _HabitAddState createState() => _HabitAddState();
 
 }
 
-class _TrackerAddState extends State<TrackerAddPage> {
+class _HabitAddState extends State<HabitAddPage> {
 
   final _formKey = GlobalKey<FormState>();
 
@@ -76,8 +76,8 @@ class _TrackerAddState extends State<TrackerAddPage> {
                       // the form is invalid.
                       if (_formKey.currentState.validate() && selectedColor != null) {
                         // Process data
-                        var tracker = Tracker(libelle: this.libelle.text, color: selectedColor);
-                        BujService().addTracker(tracker);
+                        var tracker = Habit(libelle: this.libelle.text, color: selectedColor);
+                        BujService().addHabit(tracker);
                         Navigator.pushNamed(context, TaskAddPageRoute);
                       }
                     },

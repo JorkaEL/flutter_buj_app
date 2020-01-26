@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_buj_app/model/key_task.dart';
 import 'package:flutter_buj_app/model/task.dart';
-import 'package:flutter_buj_app/model/tracker.dart';
+import 'package:flutter_buj_app/model/habit.dart';
+import 'package:logger/logger.dart';
 
 class BujService {
   BujService._internal();
@@ -12,19 +15,41 @@ class BujService {
     return _bujService;
   }
 
+  final logger = Logger();
   final List<Task> listTask = [];
   final List<KeyTask> listKeyTask = [];
-  final List<Tracker> listTracker = [Tracker(id: 0, color: Colors.grey, libelle: 'aucun')];
+  final List<Habit> listTracker = [Habit(id: 0, color: Colors.grey, libelle: 'aucun')];
 
   addTask(Task t) {
     listTask.add(t);
   }
 
-  List<Task> getTask() {
-    return listTask;
+  Future<List<Task>> getTask() {
+    var completer = Completer<List<Task>>();
+
+    completer.complete(this.listTask);
+    return completer.future;
   }
 
-  List<Tracker> getTrackers() {
+  Future<List<Task>> getTaskByDay(DateTime date) {
+    List<Task> tasks = [];
+    var completer = Completer<List<Task>>();
+
+    for(var t in listTask) {
+      if (date != null && t.date.isAtSameMomentAs(date)) {
+        tasks.add(t);
+      }
+    }
+
+    completer.complete(tasks);
+    return completer.future;
+  }
+
+  updatStateTask(id) {
+    logger.i(id);
+  }
+
+  List<Habit> getHabits() {
     return listTracker;
   }
 
@@ -36,8 +61,8 @@ class BujService {
     listKeyTask.add(k);
   }
 
-  addTracker(Tracker t) {
-    listTracker.add(t);
+  addHabit(Habit h) {
+    listTracker.add(h);
   }
 
 }

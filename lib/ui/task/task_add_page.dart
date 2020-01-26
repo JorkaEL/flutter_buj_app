@@ -2,7 +2,7 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_buj_app/model/task.dart';
-import 'package:flutter_buj_app/model/tracker.dart';
+import 'package:flutter_buj_app/model/habit.dart';
 import 'package:flutter_buj_app/model/key_task.dart';
 import 'package:flutter_buj_app/util/buj_service.dart';
 import 'package:flutter_buj_app/util/routing_constants.dart';
@@ -25,13 +25,13 @@ class _TaskAddState extends State<TaskAddPage> {
 
 
   final libelle = TextEditingController();
-  final date = TextEditingController();
+  DateTime date;
 
   KeyTask keyChoice;
   List<KeyTask> keyList = BujService().getKeyTask();
 
-  Tracker trackerChoice;
-  List<Tracker> trackerList = BujService().getTrackers();
+  Habit habitChoice;
+  List<Habit> habitList = BujService().getHabits();
 
 
   @override
@@ -68,11 +68,13 @@ class _TaskAddState extends State<TaskAddPage> {
                 ),
               DateTimeField(
                 decoration: InputDecoration(
-                  hintText: 'Date de la tache'
+                    hintText: 'Date de la tache'
                 ),
                 cursorColor: Colors.deepPurple,
                 format: format,
-                controller: this.date,
+                onChanged: (datePicker) {
+                  this.date = datePicker;
+                },
                 validator: (value) {
                   // logger.v(value);
                   if(value == null) {
@@ -124,18 +126,18 @@ class _TaskAddState extends State<TaskAddPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    DropdownButton<Tracker>(
-                      hint: Text('Selectionné votre tracker'),
-                      value: trackerChoice,
-                      onChanged: (Tracker tra) {
+                    DropdownButton<Habit>(
+                      hint: Text('Selectionné votre habitude'),
+                      value: habitChoice,
+                      onChanged: (Habit hab) {
                         setState(() {
-                          trackerChoice = tra;
+                          habitChoice = hab;
                         });
                       },
-                      items: trackerList.map((Tracker tra) {
-                        return new DropdownMenuItem<Tracker>(
-                          value: tra,
-                          child: Text(tra.libelle),
+                      items: habitList.map((Habit hab) {
+                        return new DropdownMenuItem<Habit>(
+                          value: hab,
+                          child: Text(hab.libelle),
                         );
                       }).toList(),
                     ),
@@ -160,9 +162,9 @@ class _TaskAddState extends State<TaskAddPage> {
                     onPressed: () {
                       // Validate will return true if the form is valid, or false if
                       // the form is invalid.
-                      if (_formKey.currentState.validate() && this.keyChoice != null && this.trackerChoice != null) {
+                      if (_formKey.currentState.validate() && this.keyChoice != null && this.habitChoice != null) {
                         // Process data
-                        var t = Task(libelle: this.libelle.text, date: this.date.text, id: 0, state: false, tracker: this.trackerChoice, key: this.keyChoice );
+                        var t = Task(libelle: this.libelle.text, date: this.date, id: 0, state: false, habit: this.habitChoice, key: this.keyChoice );
                         BujService().addTask(t);
                         Navigator.pushNamed(context, TaskPageRoute);
                       }

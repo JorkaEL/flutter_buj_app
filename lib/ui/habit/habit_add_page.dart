@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_buj_app/model/habit.dart';
 import 'package:flutter_buj_app/util/buj_service.dart';
 import 'package:flutter_buj_app/util/listColor_service.dart';
-import 'package:flutter_buj_app/util/routing_constants.dart';
 
 class HabitAddPage extends StatefulWidget {
 
@@ -78,7 +77,7 @@ class _HabitAddState extends State<HabitAddPage> {
                         // Process data
                         var tracker = Habit(libelle: this.libelle.text, color: selectedColor);
                         BujService().addHabit(tracker);
-                        Navigator.pushNamed(context, TaskAddPageRoute);
+                        Navigator.pop(context);
                       }
                     },
                     child: Text('Valider'),

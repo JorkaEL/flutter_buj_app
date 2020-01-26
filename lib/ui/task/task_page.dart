@@ -18,13 +18,14 @@ class TaskPage extends StatefulWidget {
 class _TaskPageState extends State {
 
   Future<List<Task>> myTask;
+  var tasks = [];
   final logger = Logger();
   final format = DateFormat("yyyy-MM-dd");
 
   @override
   void initState() {
     super.initState();
-    this.myTask = BujService().getTask();
+    this.myTask = BujService().getTaskByDay(DateTime.now());
   }
 
   @override build(BuildContext context) {
@@ -80,7 +81,7 @@ class _TaskPageState extends State {
                     child: Text('An error occurred'),
                   );
                 } else {
-                  var tasks = [];
+                  tasks = [];
                   if(snapshot.hasData) {
                      tasks = snapshot.data;
                   }

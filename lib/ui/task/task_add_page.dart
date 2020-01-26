@@ -146,7 +146,7 @@ class _TaskAddState extends State<TaskAddPage> {
                       color: Colors.deepPurple,
                       tooltip: 'Ajouter un tracker',
                       onPressed: () {
-                        Navigator.pushNamed(context, TrackerAddPageRoute);
+                        Navigator.pushNamed(context, HabitAddPageRoute);
                       },
                     ),
                   ],

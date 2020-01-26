@@ -8,7 +8,7 @@ class Task {
   KeyTask key;
   Habit habit;
   bool state;
-  String date;
+  DateTime date;
 
   Task({this.id, this.libelle, this.key, this.habit, this.state, this.date});
 

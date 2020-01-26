@@ -19,8 +19,26 @@ class _TaskPageState extends State {
 
   Future<List<Task>> myTask;
   var tasks = [];
+  DateTime _selectedDate = DateTime.now();
   final logger = Logger();
   final format = DateFormat("yyyy-MM-dd");
+
+  Future<Null> selecDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: _selectedDate,
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2100)
+    );
+
+    if(picked != null) {
+      setState(() {
+        _selectedDate = picked;
+        this.myTask = BujService().getTaskByDay(_selectedDate);
+      });
+    }
+
+  }
 
   @override
   void initState() {
@@ -43,28 +61,11 @@ class _TaskPageState extends State {
           Row(
             children: <Widget>[
               Flexible(
-            child:
-              RaisedButton(
-                child: DateTimeField(
-                    decoration: InputDecoration(
-                        hintText: 'Jour'
-                    ),
-                    onChanged: (date) {
-                      setState(() {
-                        this.myTask = BujService().getTaskByDay(date);
-                      });
-                    },
-                    format: format,
-                    onShowPicker: (context, currentValue) async {
-                      final date = await showDatePicker(
-                          context: context,
-                          firstDate: DateTime(1900),
-                          initialDate: currentValue ?? DateTime.now(),
-                          lastDate: DateTime(2100));
-
-                      return date;
-                    },
-                  ),
+                child: RaisedButton(
+                    child:Text(_selectedDate.toString()),
+                  onPressed: () {
+                      selecDate(context);
+                      },
                 ),
               ),
               Text('test 2'),
@@ -118,5 +119,4 @@ class _TaskPageState extends State {
       )
     );
   }
-
 }

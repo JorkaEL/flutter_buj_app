@@ -19,7 +19,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => TaskAddPage());
     case KeyTaskAddPageRoute:
       return MaterialPageRoute(builder: (context) => KeyTaskAddPage());
-    case TrackerAddPageRoute:
+    case HabitAddPageRoute:
       return MaterialPageRoute(builder: (context) => HabitAddPage());
     case HabitPageRoute:
       return MaterialPageRoute(builder: (context) => HabitPage());

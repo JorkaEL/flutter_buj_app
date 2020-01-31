@@ -1,4 +1,3 @@
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,13 +18,32 @@ class _TaskPageState extends State {
 
   Future<List<Task>> myTask;
   var tasks = [];
+  static DateTime now = DateTime.now();
+  DateTime _selectedDate = DateTime(now.year, now.month, now.day);
   final logger = Logger();
   final format = DateFormat("yyyy-MM-dd");
+
+  Future<Null> selecDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: _selectedDate,
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2100)
+    );
+
+    if(picked != null) {
+      setState(() {
+        _selectedDate = DateTime(picked.year,picked.month, picked.day);
+        this.myTask = BujService().getTaskByDay(_selectedDate);
+      });
+    }
+
+  }
 
   @override
   void initState() {
     super.initState();
-    this.myTask = BujService().getTaskByDay(DateTime.now());
+    this.myTask = BujService().getTaskByDay(_selectedDate);
   }
 
   @override build(BuildContext context) {
@@ -43,32 +61,19 @@ class _TaskPageState extends State {
           Row(
             children: <Widget>[
               Flexible(
-            child:
-              RaisedButton(
-                child: DateTimeField(
-                    decoration: InputDecoration(
-                        hintText: 'Jour'
-                    ),
-                    onChanged: (date) {
-                      setState(() {
-                        this.myTask = BujService().getTaskByDay(date);
-                      });
-                    },
-                    format: format,
-                    onShowPicker: (context, currentValue) async {
-                      final date = await showDatePicker(
-                          context: context,
-                          firstDate: DateTime(1900),
-                          initialDate: currentValue ?? DateTime.now(),
-                          lastDate: DateTime(2100));
-
-                      return date;
-                    },
-                  ),
+                child: RaisedButton(
+                    child:Text('${_selectedDate.day}-${_selectedDate.month}-${_selectedDate.year}'),
+                  onPressed: () {
+                      selecDate(context);
+                      },
                 ),
               ),
-              Text('test 2'),
-              Text('Test 3')
+              Flexible(child: RaisedButton(
+                child: Text('Semaine'),
+              )),
+              Flexible( child: RaisedButton(
+                child: Text('Mois'),
+              )),
             ],
           ),
     ),
@@ -118,5 +123,4 @@ class _TaskPageState extends State {
       )
     );
   }
-
 }

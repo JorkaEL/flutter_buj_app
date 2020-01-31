@@ -1,4 +1,3 @@
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,8 @@ class _TaskPageState extends State {
 
   Future<List<Task>> myTask;
   var tasks = [];
-  DateTime _selectedDate = DateTime.now();
+  static DateTime now = DateTime.now();
+  DateTime _selectedDate = DateTime(now.year, now.month, now.day);
   final logger = Logger();
   final format = DateFormat("yyyy-MM-dd");
 
@@ -33,7 +33,7 @@ class _TaskPageState extends State {
 
     if(picked != null) {
       setState(() {
-        _selectedDate = picked;
+        _selectedDate = DateTime(picked.year,picked.month, picked.day);
         this.myTask = BujService().getTaskByDay(_selectedDate);
       });
     }
@@ -43,7 +43,7 @@ class _TaskPageState extends State {
   @override
   void initState() {
     super.initState();
-    this.myTask = BujService().getTaskByDay(DateTime.now());
+    this.myTask = BujService().getTaskByDay(_selectedDate);
   }
 
   @override build(BuildContext context) {
@@ -62,14 +62,18 @@ class _TaskPageState extends State {
             children: <Widget>[
               Flexible(
                 child: RaisedButton(
-                    child:Text(_selectedDate.toString()),
+                    child:Text('${_selectedDate.day}-${_selectedDate.month}-${_selectedDate.year}'),
                   onPressed: () {
                       selecDate(context);
                       },
                 ),
               ),
-              Text('test 2'),
-              Text('Test 3')
+              Flexible(child: RaisedButton(
+                child: Text('Semaine'),
+              )),
+              Flexible( child: RaisedButton(
+                child: Text('Mois'),
+              )),
             ],
           ),
     ),

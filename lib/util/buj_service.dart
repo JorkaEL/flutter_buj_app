@@ -40,7 +40,6 @@ class BujService {
         tasks.add(t);
       }
     }
-
     completer.complete(tasks);
     return completer.future;
   }

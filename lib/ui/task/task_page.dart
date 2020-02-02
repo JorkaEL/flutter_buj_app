@@ -1,3 +1,5 @@
+import 'package:flutter_buj_app/ui/task/component/task_header.component.dart';
+import 'package:flutter_buj_app/ui/task/component/task_list.component.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,24 +22,14 @@ class _TaskPageState extends State {
   var tasks = [];
   static DateTime now = DateTime.now();
   DateTime _selectedDate = DateTime(now.year, now.month, now.day);
+
   final logger = Logger();
-  final format = DateFormat("yyyy-MM-dd");
 
-  Future<Null> selecDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: _selectedDate,
-        firstDate: DateTime(1900),
-        lastDate: DateTime(2100)
-    );
-
-    if(picked != null) {
-      setState(() {
-        _selectedDate = DateTime(picked.year,picked.month, picked.day);
-        this.myTask = BujService().getTaskByDay(_selectedDate);
-      });
-    }
-
+  filterDay(DateTime day) {
+    setState(() {
+      _selectedDate = day;
+      this.myTask = BujService().getTaskByDay(day);
+    });
   }
 
   @override
@@ -57,60 +49,13 @@ class _TaskPageState extends State {
       body: Column(
         children: <Widget>[
           Flexible(
-            child:
-          Row(
-            children: <Widget>[
-              Flexible(
-                child: RaisedButton(
-                    child:Text('${_selectedDate.day}-${_selectedDate.month}-${_selectedDate.year}'),
-                  onPressed: () {
-                      selecDate(context);
-                      },
-                ),
-              ),
-              Flexible(child: RaisedButton(
-                child: Text('Semaine'),
-              )),
-              Flexible( child: RaisedButton(
-                child: Text('Mois'),
-              )),
-            ],
-          ),
-    ),
-          Flexible(
-            child: FutureBuilder<List<Task>>(
-              future: myTask,
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Text('An error occurred'),
-                  );
-                } else {
-                  tasks = [];
-                  if(snapshot.hasData) {
-                     tasks = snapshot.data;
-                  }
-                  return ListView.separated(
-                    scrollDirection: Axis.vertical,
-                    separatorBuilder: (context, index) => Divider(),
-                    itemCount: tasks.length,
-                    itemBuilder: (context, index) => ListTile(
-                      leading: IconButton(
-                        icon: Icon(tasks[index].state ? Icons.check_box : Icons.check_box_outline_blank),
-                        onPressed: () {
-                          setState(() {
-                            BujService().updatStateTask(tasks[index].id);
-                            tasks[index].state = !tasks[index].state;
-                          });
-                        },
-                      ),
-                      title:  Text(tasks[index].libelle),
-                      trailing: Icon(tasks[index].key.icon, color: tasks[index].habit.color),
-                    ),
-                  );
-                }
-              },
+            child: TaskHeader(
+                callback: (val) => filterDay(val),
+                selectedDate: _selectedDate
             )
+          ),
+          Flexible(
+            child: TaskList(listTasks: myTask)
           ),
 
         ]),

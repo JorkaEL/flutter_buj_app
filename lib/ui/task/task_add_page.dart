@@ -23,15 +23,32 @@ class _TaskAddState extends State<TaskAddPage> {
   final _formKey = GlobalKey<FormState>();
   final format = DateFormat("yyyy-MM-dd");
 
+  static DateTime now = DateTime.now();
+  DateTime _selectedDate = DateTime(now.year, now.month, now.day);
+
 
   final libelle = TextEditingController();
-  DateTime date;
 
   KeyTask keyChoice;
   List<KeyTask> keyList = BujService().getKeyTask();
 
   Habit habitChoice;
   List<Habit> habitList = BujService().getHabits();
+
+  selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: _selectedDate,
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2100)
+    );
+
+    if(picked != null) {
+      setState(() {
+        _selectedDate = DateTime(picked.year,picked.month, picked.day);
+      });
+    }
+  }
 
 
   @override
@@ -66,31 +83,11 @@ class _TaskAddState extends State<TaskAddPage> {
                     return null;
                   },
                 ),
-              DateTimeField(
-                decoration: InputDecoration(
-                    hintText: 'Date de la tache'
-                ),
-                cursorColor: Colors.deepPurple,
-                format: format,
-                onChanged: (datePicker) {
-                  this.date = datePicker;
-                },
-                validator: (value) {
-                  // logger.v(value);
-                  if(value == null) {
-                    return 'SVP choisiez une date';
-                  }
-                  return null;
-                },
-                onShowPicker: (context, currentValue) async {
-                  final date = await showDatePicker(
-                      context: context,
-                      firstDate: DateTime(1900),
-                      initialDate: currentValue ?? DateTime.now(),
-                      lastDate: DateTime(2100));
-
-                  return date;
-                },
+              RaisedButton(
+                child: Text('${_selectedDate.day}-${_selectedDate.month}-${_selectedDate.year}'),
+                onPressed: () {
+                  selectDate(context);
+                }
               ),
               Flexible(
                 child: Row(
@@ -164,7 +161,7 @@ class _TaskAddState extends State<TaskAddPage> {
                       // the form is invalid.
                       if (_formKey.currentState.validate() && this.keyChoice != null && this.habitChoice != null) {
                         // Process data
-                        var t = Task(libelle: this.libelle.text, date: this.date, id: 0, state: false, habit: this.habitChoice, key: this.keyChoice );
+                        var t = Task(libelle: this.libelle.text, date: this._selectedDate, id: 0, state: false, habit: this.habitChoice, key: this.keyChoice );
                         BujService().addTask(t);
                         Navigator.pushNamed(context, TaskPageRoute);
                       }

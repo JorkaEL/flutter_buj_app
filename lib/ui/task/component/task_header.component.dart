@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_buj_app/ui/component/button_select_date.dart';
 
 typedef DateCallBack(DateTime val);
 
@@ -10,33 +11,12 @@ class TaskHeader extends StatelessWidget {
   DateTime selectedDate;
   TaskHeader({this.callback, this.selectedDate});
 
-
-
-  selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(1900),
-        lastDate: DateTime(2100)
-    );
-
-    if(picked != null) {
-      selectedDate = DateTime(picked.year,picked.month, picked.day);
-      callback(selectedDate);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
         Flexible(
-          child: RaisedButton(
-            child:Text('${selectedDate.day}-${selectedDate.month}-${selectedDate.year}'),
-            onPressed: () {
-              selectDate(context);
-            },
-          ),
+          child: ButtonSelectDate(callback: callback, selectedDate: selectedDate)
         ),
         Flexible(child: RaisedButton(
           child: Text('Semaine'),

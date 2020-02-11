@@ -1,9 +1,10 @@
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_buj_app/model/task.dart';
 import 'package:flutter_buj_app/model/habit.dart';
 import 'package:flutter_buj_app/model/key_task.dart';
+import 'package:flutter_buj_app/ui/component/button_select_date.dart';
+import 'package:flutter_buj_app/ui/task/component/task_add/task_add_dropdown.dart';
 import 'package:flutter_buj_app/util/buj_service.dart';
 import 'package:flutter_buj_app/util/routing_constants.dart';
 import 'package:intl/intl.dart';
@@ -30,24 +31,34 @@ class _TaskAddState extends State<TaskAddPage> {
   final libelle = TextEditingController();
 
   KeyTask keyChoice;
-  List<KeyTask> keyList = BujService().getKeyTask();
+  List<KeyTask> keyList;
 
   Habit habitChoice;
-  List<Habit> habitList = BujService().getHabits();
+  List<Habit> habitList;
 
-  selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: _selectedDate,
-        firstDate: DateTime(1900),
-        lastDate: DateTime(2100)
-    );
+  changeDay(DateTime day) {
+    setState(() {
+      _selectedDate = day;
+    });
+  }
 
-    if(picked != null) {
-      setState(() {
-        _selectedDate = DateTime(picked.year,picked.month, picked.day);
-      });
-    }
+  changeKeyTask(KeyTask keyTask) {
+    setState(() {
+      keyChoice = keyTask;
+    });
+  }
+
+  changeHabit(Habit hab) {
+    setState(() {
+      habitChoice = hab;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    this.habitList = BujService().getHabits();
+    this.keyList = BujService().getKeyTask();
   }
 
 
@@ -83,73 +94,9 @@ class _TaskAddState extends State<TaskAddPage> {
                     return null;
                   },
                 ),
-              RaisedButton(
-                child: Text('${_selectedDate.day}-${_selectedDate.month}-${_selectedDate.year}'),
-                onPressed: () {
-                  selectDate(context);
-                }
-              ),
-              Flexible(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      DropdownButton<KeyTask>(
-                        hint: Text('Selectionné votre cléé'),
-                        value: keyChoice,
-                        onChanged: (KeyTask key) {
-                          setState(() {
-                            keyChoice = key;
-                          });
-                        },
-                        items: keyList.map((KeyTask key) {
-                          return new DropdownMenuItem<KeyTask>(
-                            value: key,
-                            child: Text(key.libelle),
-                          );
-                        }).toList(),
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.add_circle),
-                        color: Colors.deepPurple,
-                        tooltip: 'Ajouter une clée',
-                        onPressed: () {
-                         Navigator.pushNamed(context, KeyTaskAddPageRoute);
-                        },
-                      ),
-                    ],
-                ),
-              ),
-              Flexible(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    DropdownButton<Habit>(
-                      hint: Text('Selectionné votre habitude'),
-                      value: habitChoice,
-                      onChanged: (Habit hab) {
-                        setState(() {
-                          habitChoice = hab;
-                        });
-                      },
-                      items: habitList.map((Habit hab) {
-                        return new DropdownMenuItem<Habit>(
-                          value: hab,
-                          child: Text(hab.libelle),
-                        );
-                      }).toList(),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.add_circle),
-                      color: Colors.deepPurple,
-                      tooltip: 'Ajouter un tracker',
-                      onPressed: () {
-                        Navigator.pushNamed(context, HabitAddPageRoute);
-                      },
-                    ),
-                  ],
-                ),
-              ),
-
+              ButtonSelectDate(callback: (day) => changeDay(day), selectedDate: _selectedDate),
+              TaskAddDropdown(keyList, keyChoice, 'Sélectionner votre clée', KeyTaskAddPageRoute, (keyTask) => changeKeyTask(keyTask)),
+              TaskAddDropdown(habitList, habitChoice, 'Sélectionner votre habitude', HabitAddPageRoute, (hab) => changeHabit(hab)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[

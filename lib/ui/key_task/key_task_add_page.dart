@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_buj_app/model/key_task.dart';
 import 'package:flutter_buj_app/util/buj_service.dart';
 import 'package:flutter_buj_app/util/listIcon_service.dart';
+import 'package:flutter_buj_app/util/routing_constants.dart';
 
 class KeyTaskAddPage extends StatefulWidget {
 
@@ -73,7 +74,7 @@ class _KeyTaskAddState extends State<KeyTaskAddPage> {
                         // Process data
                         var key = KeyTask(libelle: this.libelle.text, icon: selectedIcon);
                         BujService().addKeyTask(key);
-                        Navigator.pop(context);
+                        Navigator.pushNamed(context, TaskAddPageRoute);
                       }
                     },
                     child: Text('Valider'),

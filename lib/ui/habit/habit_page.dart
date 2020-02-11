@@ -42,7 +42,7 @@ class _HabitPageState extends State {
         floatingActionButton: FloatingActionButton(
       backgroundColor: Colors.deepPurple,
       onPressed: () {
-        Navigator.pushNamed(context, HabitAddPageRoute);
+        Navigator.pushNamed(context, HabitAddPageRoute, arguments: HabitPageRoute);
       },
       child: Icon(Icons.add),
     )

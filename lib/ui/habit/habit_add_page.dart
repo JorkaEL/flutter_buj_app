@@ -5,6 +5,9 @@ import 'package:flutter_buj_app/util/buj_service.dart';
 import 'package:flutter_buj_app/util/listColor_service.dart';
 
 class HabitAddPage extends StatefulWidget {
+  final String routeToBack;
+
+  HabitAddPage({Key key, this.routeToBack}) : super(key: key);
 
   @override
   _HabitAddState createState() => _HabitAddState();
@@ -77,7 +80,7 @@ class _HabitAddState extends State<HabitAddPage> {
                         // Process data
                         var tracker = Habit(libelle: this.libelle.text, color: selectedColor);
                         BujService().addHabit(tracker);
-                        Navigator.pop(context);
+                        Navigator.pushNamed(context, widget.routeToBack);
                       }
                     },
                     child: Text('Valider'),

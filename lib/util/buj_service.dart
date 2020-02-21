@@ -17,8 +17,8 @@ class BujService {
 
   final logger = Logger();
   final List<Task> listTask = [];
-  final List<KeyTask> listKeyTask = [];
-  final List<Habit> listTracker = [Habit(id: 0, color: Colors.grey, libelle: 'aucun')];
+  final List<KeyTask> listKeyTask = [KeyTask(id: 0, libelle: 'TODO', icon: Icons.mode_edit ), KeyTask(id: 0, libelle: 'Urgent', icon: Icons.priority_high ), KeyTask(id: 0, libelle: 'Evenement', icon: Icons.insert_invitation ), KeyTask(id: 0, libelle: 'Anniversaire', icon: Icons.cake ),KeyTask(id: 0, libelle: 'Réunion', icon: Icons.business_center ), KeyTask(id: 0, libelle: 'Déjeuner', icon:Icons.restaurant ),KeyTask(id: 0, libelle: 'Sortie', icon: Icons.nature_people )];
+  final List<Habit> listTracker = [Habit(id: 0, color: Colors.grey, libelle: 'Aucune')];
 
   addTask(Task t) {
     listTask.add(t);

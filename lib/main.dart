@@ -11,6 +11,7 @@ class BujApp extends StatelessWidget {
     return MaterialApp(
         title: 'BUJ',
         onGenerateRoute: router.generateRoute,
+        debugShowCheckedModeBanner: false,
         initialRoute: HomePageRoute);
   }
 }

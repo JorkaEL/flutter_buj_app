@@ -20,7 +20,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case KeyTaskAddPageRoute:
       return MaterialPageRoute(builder: (context) => KeyTaskAddPage());
     case HabitAddPageRoute:
-      return MaterialPageRoute(builder: (context) => HabitAddPage());
+      return MaterialPageRoute(builder: (context) => HabitAddPage(routeToBack: settings.arguments));
     case HabitPageRoute:
       return MaterialPageRoute(builder: (context) => HabitPage());
     default:

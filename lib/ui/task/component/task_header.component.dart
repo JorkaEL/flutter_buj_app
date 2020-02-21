@@ -13,18 +13,20 @@ class TaskHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Flexible(
-          child: ButtonSelectDate(callback: callback, selectedDate: selectedDate)
-        ),
-        Flexible(child: RaisedButton(
-          child: Text('Semaine'),
-        )),
-        Flexible( child: RaisedButton(
-          child: Text('Mois'),
-        )),
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          ButtonSelectDate(callback: callback, selectedDate: selectedDate),
+          RaisedButton(
+            child: Text('Semaine'),
+          ),
+          RaisedButton(
+            child: Text('Mois'),
+          ),
+        ],
+      ),
     );
   }
 }

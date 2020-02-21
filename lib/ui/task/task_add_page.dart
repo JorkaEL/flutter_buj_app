@@ -90,14 +90,31 @@ class _TaskAddState extends State<TaskAddPage> {
                   ButtonSelectDate(
                       callback: (day) => changeDay(day),
                       selectedDate: _selectedDate),
-                  TaskAddDropdown(keyList, keyChoice, 'Sélectionner votre clée',
-                      KeyTaskAddPageRoute, (keyTask) => changeKeyTask(keyTask)),
                   TaskAddDropdown(
-                      habitList,
-                      habitChoice,
-                      'Sélectionner votre habitude',
-                      HabitAddPageRoute,
-                      (hab) => changeHabit(hab)),
+                      keyList,
+                      keyChoice,
+                      'Sélectionner votre clée',
+                      'keyTask',
+                      (keyTask) => changeKeyTask(keyTask)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      TaskAddDropdown(
+                          habitList,
+                          habitChoice,
+                          'Sélectionner votre habitude',
+                          'habit',
+                          (hab) => changeHabit(hab)),
+                      IconButton(
+                        icon: Icon(Icons.add_circle),
+                        color: Colors.deepPurple,
+                        onPressed: () {
+                          Navigator.pushNamed(context, HabitAddPageRoute,
+                              arguments: TaskAddPageRoute);
+                        },
+                      ),
+                    ],
+                  ),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -105,8 +122,6 @@ class _TaskAddState extends State<TaskAddPage> {
                           color: Colors.deepPurple,
                           textColor: Colors.white,
                           onPressed: () {
-                            // Validate will return true if the form is valid, or false if
-                            // the form is invalid.
                             if (_formKey.currentState.validate() &&
                                 this.keyChoice != null &&
                                 this.habitChoice != null) {

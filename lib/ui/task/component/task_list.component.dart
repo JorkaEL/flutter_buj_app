@@ -49,6 +49,12 @@ class _TaskListState extends State<TaskList> {
               ),
               title:  Text(widget.tasks[index].libelle),
               trailing: Icon(widget.tasks[index].key.icon, color: widget.tasks[index].habit.color),
+              onTap: () {
+                setState(() {
+                  BujService().updatStateTask(widget.tasks[index].id);
+                  widget.tasks[index].state = !widget.tasks[index].state;
+                });
+              },
             ),
           );
         }

@@ -9,7 +9,7 @@ class ButtonSelectDate extends StatelessWidget {
   final DateCallBack callback;
   DateTime selectedDate;
 
-  ButtonSelectDate({this.callback, this.selectedDate});
+  ButtonSelectDate({@required this.callback, @required this.selectedDate});
 
   selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -26,9 +26,10 @@ class ButtonSelectDate extends StatelessWidget {
   }
 
   formatDateText() {
-     String month = selectedDate.month > 9 ? selectedDate.month : '0${selectedDate.month}';
+     String month = selectedDate.month > 9 ? selectedDate.month.toString() : '0${selectedDate.month}';
+     String day = selectedDate.day > 9 ? selectedDate.day.toString() : '0${selectedDate.day}';
 
-     return '${selectedDate.day}-$month-${selectedDate.year}';
+     return  '$day-$month-${selectedDate.year}';
   }
 
   @override

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_buj_app/ui/component/side_menu.component.dart';
 import 'package:flutter_buj_app/util/routing_constants.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 import 'component/task_body.component.dart';
 
@@ -18,7 +19,7 @@ class _TaskPageState extends State {
         appBar: AppBar(
           backgroundColor: Colors.deepPurple,
           centerTitle: true,
-          title: Text('Taches')
+          title: Text(FlutterI18n.translate(context, "task.title"))
         ),
       drawer: SideMenu(),
       body: TaskBody(),

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_buj_app/app_localizations.dart';
 import 'package:flutter_buj_app/util/router.dart' as router;
 import 'package:flutter_buj_app/util/routing_constants.dart';
-import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() => runApp(BujApp());
 
 
 class BujApp extends StatelessWidget {
-  final FlutterI18nDelegate flutterI18nDelegate = FlutterI18nDelegate(
-      useCountryCode: false,
-      fallbackFile: 'en',
-      path: 'assets/i18n',
-      forcedLocale: new Locale('fr'));
+  final AppLocalizationsDelegate i18n = AppLocalizationsDelegate(
+      supportedLocales: [Locale('en', 'US'), Locale('fr', 'FR')],
+      pathFile: 'assets/i18n'
+  );
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,11 +19,15 @@ class BujApp extends StatelessWidget {
         onGenerateRoute: router.generateRoute,
         debugShowCheckedModeBanner: false,
         initialRoute: HomePageRoute,
+        supportedLocales: i18n.supportedLocales,
         localizationsDelegates: [
-          flutterI18nDelegate,
+          i18n,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate
         ],
+        localeResolutionCallback: (Locale locale, supportedLocales) {
+          return i18n.localeResolutionCallback(locale);
+        },
     );
   }
 }

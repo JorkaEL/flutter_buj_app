@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_buj_app/app_localizations.dart';
+import 'package:flutter_buj_app/i18n_localizations.dart';
 import 'package:flutter_buj_app/util/router.dart' as router;
 import 'package:flutter_buj_app/util/routing_constants.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -8,7 +8,7 @@ void main() => runApp(BujApp());
 
 
 class BujApp extends StatelessWidget {
-  final AppLocalizationsDelegate i18n = AppLocalizationsDelegate(
+  final I18nLocalizationsDelegate i18n = I18nLocalizationsDelegate(
       supportedLocales: [Locale('en', 'US'), Locale('fr', 'FR')],
       pathFile: 'assets/i18n'
   );

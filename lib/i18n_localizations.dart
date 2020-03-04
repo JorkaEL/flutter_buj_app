@@ -4,18 +4,18 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class AppLocalizations {
+class I18nLocalizations {
   final Locale locale;
   final List<Locale> supportedLocales;
   final String pathFile;
   Map<dynamic, dynamic> localizedMap;
 
-  AppLocalizations(this.locale, this.supportedLocales, this.pathFile);
+  I18nLocalizations(this.locale, this.supportedLocales, this.pathFile);
 
   // Helper method to keep the code in the widgets concise
   // Localizations are accessed using an InheritedWidget "of" syntax
-  static AppLocalizations of(BuildContext context) {
-    return Localizations.of<AppLocalizations>(context, AppLocalizations);
+  static I18nLocalizations of(BuildContext context) {
+    return Localizations.of<I18nLocalizations>(context, I18nLocalizations);
   }
 
   Future<bool> load() async {
@@ -41,49 +41,61 @@ class AppLocalizations {
   }
 
   // This method will be called from every widget which needs a localized text
-  static String translate(BuildContext context, String key) {
-    return _decodeFromMap(Localizations
-        .of<AppLocalizations>(context, AppLocalizations)
+  static String translate(BuildContext context, String key,
+      { final Map<String, String> params }) {
+    String translation = _decodeFromMap(Localizations
+        .of<I18nLocalizations>(context, I18nLocalizations)
         .localizedMap, key);
+
+    if (params != null) {
+      translation = _addParams(translation, params);
+    }
+
+    return translation;
   }
 
-  addLocale(Locale locale) {
-    supportedLocales.add(locale);
-  }
-
-  static String _decodeFromMap(Map<dynamic, dynamic> decodedMap,
+  static String _decodeFromMap(Map<dynamic, dynamic> map,
       final String key) {
-    final Map<dynamic, dynamic> subMap = _calculateSubmap(decodedMap, key);
-    final String lastKeyPart = key
+    final Map<dynamic, dynamic> subMap = _createSubMap(map, key);
+    final String lastKey = key
         .split(".")
         .last;
-    return subMap[lastKeyPart];
+    return subMap[lastKey];
   }
 
-  static Map<dynamic, dynamic> _calculateSubmap(
-      Map<dynamic, dynamic> decodedMap, final String translationKey) {
-    final List<String> translationKeySplitted = translationKey.split(".");
+  static Map<dynamic, dynamic> _createSubMap(Map<dynamic, dynamic> map,
+      final String key) {
+    final List<String> translationKeySplitted = key.split(".");
     translationKeySplitted.removeLast();
     translationKeySplitted.forEach((listKey) =>
-    decodedMap =
-    decodedMap != null && decodedMap[listKey] != null
-        ? decodedMap[listKey]
+    map =
+    map != null && map[listKey] != null
+        ? map[listKey]
         : new Map());
-    return decodedMap;
+    return map;
+  }
+
+  static String _addParams(String translation,
+      final Map<String, String> params) {
+    for (final String paramKey in params.keys) {
+      translation = translation.replaceAll(
+          new RegExp('{$paramKey}'), params[paramKey]);
+    }
+    return translation;
   }
 
 }
 
 // LocalizationsDelegate is a factory for a set of localized resources
 // In this case, the localized strings will be gotten in an AppLocalizations object
-class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+class I18nLocalizationsDelegate extends LocalizationsDelegate<I18nLocalizations> {
   final List<Locale> supportedLocales;
   final String pathFile;
-  static AppLocalizations localizations;
+  static I18nLocalizations localizations;
 
   // This delegate instance will never change (it doesn't even have fields!)
   // It can provide a constant constructor.
-  AppLocalizationsDelegate({this.supportedLocales, this.pathFile});
+  I18nLocalizationsDelegate({this.supportedLocales, this.pathFile});
 
   @override
   bool isSupported(Locale locale) {
@@ -92,15 +104,15 @@ class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   }
 
   @override
-  Future<AppLocalizations> load(Locale locale) async {
+  Future<I18nLocalizations> load(Locale locale) async {
     // AppLocalizations class is where the JSON loading actually runs
-    localizations = AppLocalizations(locale, supportedLocales, pathFile);
+    localizations = I18nLocalizations(locale, supportedLocales, pathFile);
     await localizations.load();
     return localizations;
   }
 
   @override
-  bool shouldReload(AppLocalizationsDelegate old) => false;
+  bool shouldReload(I18nLocalizationsDelegate old) => false;
 
   localeResolutionCallback(Locale locale) {
     // Check if the current device locale is supported

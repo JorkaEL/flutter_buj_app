@@ -10,12 +10,11 @@
     "month": "Mois",
     "add": {
       "title": "Ajout de tache",
-      "libeler": "Libéller de la tache",
+      "libeler": "Libéller de la tache"
     }
   },
   "habit": {
     "title": "Habitudes",
-    "libeler": "",
     "dropdown": "Sélectionner votre habitude",
     "add": {
       "title": "Ajout d'une habitude",

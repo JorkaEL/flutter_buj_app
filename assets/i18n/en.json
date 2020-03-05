@@ -10,12 +10,11 @@
     "month": "Month",
     "add": {
       "title": "Add Task",
-      "libeler": "Libeller of task",
+      "libeler": "Libeller of task"
     }
   },
   "habit": {
     "title": "Habits",
-    "libeler": "",
     "dropdown": "Select your habit",
     "add": {
       "title": "Add habit",

@@ -24,6 +24,7 @@
       "add": {
         "libeler": "pleas enter a libeller"
       }
-    }
+    },
+    "page": "Route for {name} is not defined."
   }
 }

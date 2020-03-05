@@ -24,6 +24,7 @@
       "add": {
         "libeler": "SVP rentrer un libéller pour la tache"
       }
-    }
+    },
+    "page": "La route pour {name} n'est pas définie."
   }
 }

@@ -9,8 +9,14 @@
     }
   },
   "habit": {
+    "title": "Habitudes",
     "libeler": "",
-    "dropdown": "Sélectionner votre habitude"
+    "dropdown": "Sélectionner votre habitude",
+    "add": {
+      "title": "Ajout d'une habitude",
+      "libeler": "libéller de l'habitude",
+      "dropdown": "Sélectionner votre couleur"
+    }
   },
   "keyTask" : {
     "dropdown": "Sélectionner votre clée"
@@ -23,6 +29,11 @@
       "list": "Une erreur est survenue",
       "add": {
         "libeler": "SVP rentrer un libéller pour la tache"
+      }
+    },
+    "habit": {
+      "add": {
+        "libeler": "SVP rentrer un libéller pour l'habitude"
       }
     },
     "page": "La route pour {name} n'est pas définie."

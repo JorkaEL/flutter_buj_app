@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_buj_app/i18n_localizations.dart';
 import 'package:flutter_buj_app/model/habit.dart';
 import 'package:flutter_buj_app/util/buj_service.dart';
 import 'package:flutter_buj_app/util/listColor_service.dart';
@@ -28,7 +29,7 @@ class _HabitAddState extends State<HabitAddPage> {
       appBar: AppBar(
           backgroundColor: Colors.deepPurple,
           centerTitle: true,
-          title: Text('Ajout d\'un tracker'),
+          title: Text(I18nLocalizations.translate(context,"habit.add.title")),
       ),
       body: Form(
           key: _formKey,
@@ -39,19 +40,19 @@ class _HabitAddState extends State<HabitAddPage> {
               children: <Widget>[
                 TextFormField(
                   controller: this.libelle,
-                  decoration: const InputDecoration(
-                    hintText: 'Libéller du tracker',
+                  decoration: InputDecoration(
+                    hintText: I18nLocalizations.translate(context,"habit.add.libeler")
                   ),
                   // The validator receives the text that the user has entered.
                   validator: (value) {
                     if (value.isEmpty) {
-                      return 'SVP rentrer un libéller pour le tracker';
+                      return I18nLocalizations.translate(context,"error.habit.add.libeler");
                     }
                     return null;
                   },
                 ),
                 DropdownButton<Color>(
-                  hint: Text('Selectionné votre color'),
+                  hint: Text(I18nLocalizations.translate(context,"habit.add.dropdown")),
                   value: selectedColor,
                   onChanged: (Color color) {
                     setState(() {
@@ -83,7 +84,7 @@ class _HabitAddState extends State<HabitAddPage> {
                         Navigator.pushNamed(context, widget.routeToBack);
                       }
                     },
-                    child: Text('Valider'),
+                    child: Text(I18nLocalizations.translate(context,"actions.validate")),
                   ),]
                 ),
               ],

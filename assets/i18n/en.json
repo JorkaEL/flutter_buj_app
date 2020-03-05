@@ -9,8 +9,14 @@
     }
   },
   "habit": {
+    "title": "Habits",
     "libeler": "",
-    "dropdown": "Select your habit"
+    "dropdown": "Select your habit",
+    "add": {
+      "title": "Add habit",
+      "libeler": "libeller of habit",
+      "dropdown": "Select your Color"
+    }
   },
   "keyTask" : {
     "dropdown": "Select your key"
@@ -21,6 +27,11 @@
   "error": {
     "task": {
       "list": "Une erreur est survenue",
+      "add": {
+        "libeler": "pleas enter a libeller"
+      }
+    },
+    "habit": {
       "add": {
         "libeler": "pleas enter a libeller"
       }

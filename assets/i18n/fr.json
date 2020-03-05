@@ -1,12 +1,11 @@
 {
   "task": {
     "title": "Taches",
+    "week" : "Semaine",
+    "month": "Mois",
     "add": {
       "title": "Ajout de tache",
       "libeler": "Libéller de la tache",
-      "error": {
-        "libeler": "SVP rentrer un libéller pour la tache"
-      }
     }
   },
   "habit": {
@@ -18,5 +17,13 @@
   },
   "actions" : {
     "validate": "Valider"
+  },
+  "error": {
+    "task": {
+      "list": "Une erreur est survenue",
+      "add": {
+        "libeler": "SVP rentrer un libéller pour la tache"
+      }
+    }
   }
 }

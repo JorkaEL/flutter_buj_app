@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_buj_app/i18n_localizations.dart';
 import 'package:flutter_buj_app/ui/component/button_select_date.dart';
 
 typedef DateCallBack(DateTime val);
@@ -20,10 +21,10 @@ class TaskHeader extends StatelessWidget {
         children: <Widget>[
           ButtonSelectDate(callback: callback, selectedDate: selectedDate),
           RaisedButton(
-            child: Text('Semaine'),
+            child: Text(I18nLocalizations.translate(context, 'task.week')),
           ),
           RaisedButton(
-            child: Text('Mois'),
+            child: Text(I18nLocalizations.translate(context, 'task.month')),
           ),
         ],
       ),

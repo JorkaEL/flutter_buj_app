@@ -1,12 +1,11 @@
 {
   "task": {
     "title": "Task",
+    "week" : "Week",
+    "month": "Month",
     "add": {
       "title": "Add Task",
       "libeler": "Libeller of task",
-      "error": {
-        "libeler": "pleas enter a libeller"
-      }
     }
   },
   "habit": {
@@ -17,6 +16,14 @@
     "dropdown": "Select your key"
   },
   "actions" : {
-    "validate": "validate"
+    "validate": "Validate"
+  },
+  "error": {
+    "task": {
+      "list": "Une erreur est survenue",
+      "add": {
+        "libeler": "pleas enter a libeller"
+      }
+    }
   }
 }

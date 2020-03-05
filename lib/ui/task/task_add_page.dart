@@ -83,7 +83,7 @@ class _TaskAddState extends State<TaskAddPage> {
                     // The validator receives the text that the user has entered.
                     validator: (value) {
                       if (value.isEmpty) {
-                        return I18nLocalizations.translate(context, 'task.add.error.libeler');
+                        return I18nLocalizations.translate(context, 'error.task.add.libeler');
                       }
                       return null;
                     },

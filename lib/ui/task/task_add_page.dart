@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_buj_app/i18n_localizations.dart';
 import 'package:flutter_buj_app/model/task.dart';
 import 'package:flutter_buj_app/model/habit.dart';
 import 'package:flutter_buj_app/model/key_task.dart';
@@ -65,7 +66,7 @@ class _TaskAddState extends State<TaskAddPage> {
               onPressed: () => Navigator.pushNamed(context, TaskPageRoute)),
           backgroundColor: Colors.deepPurple,
           centerTitle: true,
-          title: Text('Ajout de tache')),
+          title: Text(I18nLocalizations.translate(context, 'task.add.title'))),
       body: Form(
           key: _formKey,
           child: Container(
@@ -76,13 +77,13 @@ class _TaskAddState extends State<TaskAddPage> {
                 children: <Widget>[
                   TextFormField(
                     controller: this.libelle,
-                    decoration: const InputDecoration(
-                      hintText: 'Libéller de la tache',
+                    decoration: InputDecoration(
+                      hintText: I18nLocalizations.translate(context, 'task.add.libeler'),
                     ),
                     // The validator receives the text that the user has entered.
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'SVP rentrer un libéller pour la tache';
+                        return I18nLocalizations.translate(context, 'task.add.error.libeler');
                       }
                       return null;
                     },
@@ -93,7 +94,7 @@ class _TaskAddState extends State<TaskAddPage> {
                   TaskAddDropdown(
                       keyList,
                       keyChoice,
-                      'Sélectionner votre clée',
+                      I18nLocalizations.translate(context, 'keyTask.dropdown'),
                       'keyTask',
                       (keyTask) => changeKeyTask(keyTask)),
                   Row(
@@ -102,7 +103,7 @@ class _TaskAddState extends State<TaskAddPage> {
                       TaskAddDropdown(
                           habitList,
                           habitChoice,
-                          'Sélectionner votre habitude',
+                          I18nLocalizations.translate(context, 'habit.dropdown'),
                           'habit',
                           (hab) => changeHabit(hab)),
                       IconButton(
@@ -137,7 +138,7 @@ class _TaskAddState extends State<TaskAddPage> {
                               Navigator.pushNamed(context, TaskPageRoute);
                             }
                           },
-                          child: Text('Valider'),
+                          child: Text(I18nLocalizations.translate(context, 'actions.validate')),
                         ),
                       ]),
                 ],

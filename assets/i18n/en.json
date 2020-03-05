@@ -1,5 +1,22 @@
 {
   "task": {
-    "title": "Tasks"
+    "title": "Task",
+    "add": {
+      "title": "Add Task",
+      "libeler": "Libeller of task",
+      "error": {
+        "libeler": "pleas enter a libeller"
+      }
+    }
+  },
+  "habit": {
+    "libeler": "",
+    "dropdown": "Select your habit"
+  },
+  "keyTask" : {
+    "dropdown": "Select your key"
+  },
+  "actions" : {
+    "validate": "validate"
   }
 }

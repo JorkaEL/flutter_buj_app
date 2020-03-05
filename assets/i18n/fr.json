@@ -1,5 +1,22 @@
 {
   "task": {
-    "title": "Taches"
+    "title": "Taches",
+    "add": {
+      "title": "Ajout de tache",
+      "libeler": "Libéller de la tache",
+      "error": {
+        "libeler": "SVP rentrer un libéller pour la tache"
+      }
+    }
+  },
+  "habit": {
+    "libeler": "",
+    "dropdown": "Sélectionner votre habitude"
+  },
+  "keyTask" : {
+    "dropdown": "Sélectionner votre clée"
+  },
+  "actions" : {
+    "validate": "Valider"
   }
 }

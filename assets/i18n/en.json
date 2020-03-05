@@ -1,4 +1,9 @@
 {
+  "menu": {
+    "title": "BUJO",
+    "task": "Task",
+    "habit": "Habit"
+  },
   "task": {
     "title": "Task",
     "week" : "Week",

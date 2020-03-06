@@ -1,14 +1,10 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:i18n_localizations/i18n_localizations.dart';
 import 'package:flutter_buj_app/model/task.dart';
 import 'package:flutter_buj_app/util/buj_service.dart';
 
 class TaskList extends StatefulWidget {
-  TaskList({
-    Key key,
-    @required this.listTasks
-  }) : super(key: key);
+  TaskList({Key key, @required this.listTasks}) : super(key: key);
 
   final Future<List<Task>> listTasks;
   var tasks = [];
@@ -26,11 +22,11 @@ class _TaskListState extends State<TaskList> {
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Center(
-            child: Text('An error occurred'),
+            child: Text(I18nLocalizations.translate(context,"error.task.list")),
           );
         } else {
           widget.tasks = [];
-          if(snapshot.hasData) {
+          if (snapshot.hasData) {
             widget.tasks = snapshot.data;
           }
           return ListView.separated(
@@ -39,7 +35,9 @@ class _TaskListState extends State<TaskList> {
             itemCount: widget.tasks.length,
             itemBuilder: (context, index) => ListTile(
               leading: IconButton(
-                icon: Icon(widget.tasks[index].state ? Icons.check_box : Icons.check_box_outline_blank),
+                icon: Icon(widget.tasks[index].state
+                    ? Icons.check_box
+                    : Icons.check_box_outline_blank),
                 onPressed: () {
                   setState(() {
                     BujService().updatStateTask(widget.tasks[index].id);
@@ -47,8 +45,9 @@ class _TaskListState extends State<TaskList> {
                   });
                 },
               ),
-              title:  Text(widget.tasks[index].libelle),
-              trailing: Icon(widget.tasks[index].key.icon, color: widget.tasks[index].habit.color),
+              title: Text(widget.tasks[index].libelle),
+              trailing: Icon(widget.tasks[index].key.icon,
+                  color: widget.tasks[index].habit.color),
               onTap: () {
                 setState(() {
                   BujService().updatStateTask(widget.tasks[index].id);

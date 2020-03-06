@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_buj_app/util/routing_constants.dart';
+import 'package:i18n_localizations/i18n_localizations.dart';
 
 class SideMenu extends StatelessWidget {
 
@@ -10,17 +11,17 @@ class SideMenu extends StatelessWidget {
       child: ListView(
           children: <Widget>[
             DrawerHeader(
-              child: Center(child: Text('BUJ')),
+              child: Center(child: Text(I18nLocalizations.translate(context,"menu.title"))),
               decoration: BoxDecoration(
                 color: Colors.deepPurple,
               ),
             ),
             ListTile(
-              title: Center(child:Text('Taches')),
+              title: Center(child:Text(I18nLocalizations.translate(context,"menu.task"))),
               onTap: () => _goToTask(context),
             ),
             ListTile(
-              title: Center(child:Text('Habitudes')),
+              title: Center(child:Text(I18nLocalizations.translate(context,"menu.habit"))),
               onTap: () => _goToHabit(context),
             ),
           ]

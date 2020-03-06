@@ -4,6 +4,7 @@ import 'package:flutter_buj_app/model/habit.dart';
 import 'package:flutter_buj_app/ui/component/side_menu.component.dart';
 import 'package:flutter_buj_app/util/buj_service.dart';
 import 'package:flutter_buj_app/util/routing_constants.dart';
+import 'package:i18n_localizations/i18n_localizations.dart';
 
 class HabitPage extends StatefulWidget {
 
@@ -27,7 +28,7 @@ class _HabitPageState extends State {
         appBar: AppBar(
             backgroundColor: Colors.deepPurple,
             centerTitle: true,
-            title: Text('Habitudes')
+            title: Text(I18nLocalizations.translate(context,"habit.title"))
         ),
         drawer: SideMenu(),
         body: ListView.separated(

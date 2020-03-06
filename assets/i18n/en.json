@@ -1,0 +1,45 @@
+{
+  "menu": {
+    "title": "BUJO",
+    "task": "Task",
+    "habit": "Habit"
+  },
+  "task": {
+    "title": "Task",
+    "week" : "Week",
+    "month": "Month",
+    "add": {
+      "title": "Add Task",
+      "libeler": "Libeller of task"
+    }
+  },
+  "habit": {
+    "title": "Habits",
+    "dropdown": "Select your habit",
+    "add": {
+      "title": "Add habit",
+      "libeler": "libeller of habit",
+      "dropdown": "Select your Color"
+    }
+  },
+  "keyTask" : {
+    "dropdown": "Select your key"
+  },
+  "actions" : {
+    "validate": "Validate"
+  },
+  "error": {
+    "task": {
+      "list": "Une erreur est survenue",
+      "add": {
+        "libeler": "pleas enter a libeller"
+      }
+    },
+    "habit": {
+      "add": {
+        "libeler": "pleas enter a libeller"
+      }
+    },
+    "page": "Route for {name} is not defined."
+  }
+}

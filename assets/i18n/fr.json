@@ -1,0 +1,45 @@
+{
+  "menu": {
+    "title": "BUJO",
+    "task": "Taches",
+    "habit": "Habitudes"
+  },
+  "task": {
+    "title": "Taches",
+    "week" : "Semaine",
+    "month": "Mois",
+    "add": {
+      "title": "Ajout de tache",
+      "libeler": "Libéller de la tache"
+    }
+  },
+  "habit": {
+    "title": "Habitudes",
+    "dropdown": "Sélectionner votre habitude",
+    "add": {
+      "title": "Ajout d'une habitude",
+      "libeler": "libéller de l'habitude",
+      "dropdown": "Sélectionner votre couleur"
+    }
+  },
+  "keyTask" : {
+    "dropdown": "Sélectionner votre clée"
+  },
+  "actions" : {
+    "validate": "Valider"
+  },
+  "error": {
+    "task": {
+      "list": "Une erreur est survenue",
+      "add": {
+        "libeler": "SVP rentrer un libéller pour la tache"
+      }
+    },
+    "habit": {
+      "add": {
+        "libeler": "SVP rentrer un libéller pour l'habitude"
+      }
+    },
+    "page": "La route pour {name} n'est pas définie."
+  }
+}

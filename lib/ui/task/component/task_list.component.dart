@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_buj_app/i18n_localizations.dart';
+import 'package:i18n_localizations/i18n_localizations.dart';
 import 'package:flutter_buj_app/model/task.dart';
 import 'package:flutter_buj_app/util/buj_service.dart';
 

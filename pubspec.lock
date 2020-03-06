@@ -79,6 +79,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  i18n_localizations:
+    dependency: "direct main"
+    description:
+      name: i18n_localizations
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   image:
     dependency: transitive
     description:

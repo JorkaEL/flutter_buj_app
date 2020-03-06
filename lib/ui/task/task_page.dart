@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_buj_app/i18n_localizations.dart';
+import 'package:i18n_localizations/i18n_localizations.dart';
 import 'package:flutter_buj_app/ui/component/side_menu.component.dart';
 import 'package:flutter_buj_app/util/routing_constants.dart';
 

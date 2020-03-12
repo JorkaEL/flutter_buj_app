@@ -19,7 +19,6 @@ class TaskAddPage extends StatefulWidget {
 class _TaskAddState extends State<TaskAddPage> {
   final logger = Logger();
   final _formKey = GlobalKey<FormState>();
-  final format = DateFormat("yyyy-MM-dd");
 
   static DateTime now = DateTime.now();
   DateTime _selectedDate = DateTime(now.year, now.month, now.day);
@@ -90,7 +89,9 @@ class _TaskAddState extends State<TaskAddPage> {
                   ),
                   ButtonSelectDate(
                       callback: (day) => changeDay(day),
-                      selectedDate: _selectedDate),
+                      selectedDate: _selectedDate,
+                      formatDate: I18nLocalizations.translate(context, 'formatDate'),
+                  ),
                   TaskAddDropdown(
                       keyList,
                       keyChoice,

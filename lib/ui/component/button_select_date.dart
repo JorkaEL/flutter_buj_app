@@ -1,20 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 typedef DateCallBack(DateTime val);
 
 class ButtonSelectDate extends StatelessWidget {
   final DateCallBack callback;
   DateTime selectedDate;
+  String formatDate;
+  DateTime firstDate;
+  DateTime lastDate;
 
-  ButtonSelectDate({@required this.callback, @required this.selectedDate});
+  ButtonSelectDate({@required this.callback, @required this.selectedDate, this.firstDate, this.lastDate, this.formatDate });
 
   selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
-        firstDate: DateTime(1900),
-        lastDate: DateTime(2100));
+        firstDate: this.firstDate != null ? this.firstDate : DateTime(1900),
+        lastDate: this.lastDate != null ? this.lastDate : DateTime(2100));
     if (picked != null) {
       selectedDate = DateTime(picked.year, picked.month, picked.day);
       callback(selectedDate);
@@ -22,14 +26,9 @@ class ButtonSelectDate extends StatelessWidget {
   }
 
   formatDateText() {
-    String month = selectedDate.month > 9
-        ? selectedDate.month.toString()
-        : '0${selectedDate.month}';
-    String day = selectedDate.day > 9
-        ? selectedDate.day.toString()
-        : '0${selectedDate.day}';
+    final format = this.formatDate != null ? this.formatDate : 'yyyy-MM-dd';
 
-    return '$day-$month-${selectedDate.year}';
+    return DateFormat(format).format(selectedDate);
   }
 
   @override

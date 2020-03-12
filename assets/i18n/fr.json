@@ -41,5 +41,6 @@
       }
     },
     "page": "La route pour {name} n'est pas définie."
-  }
+  },
+  "formatDate": "dd-MM-yyyy"
 }

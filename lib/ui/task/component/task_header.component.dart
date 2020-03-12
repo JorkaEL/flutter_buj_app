@@ -19,7 +19,11 @@ class TaskHeader extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          ButtonSelectDate(callback: callback, selectedDate: selectedDate),
+          ButtonSelectDate(
+              callback: callback,
+              selectedDate: selectedDate,
+              formatDate: I18nLocalizations.translate(context, 'formatDate'),
+          ),
           RaisedButton(
             child: Text(I18nLocalizations.translate(context, 'task.week')),
           ),

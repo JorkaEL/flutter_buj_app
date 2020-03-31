@@ -16,7 +16,7 @@ class ButtonSelectDate extends StatelessWidget {
   selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
         context: context,
-        initialDate: selectedDate,
+        initialDate: this.selectedDate,
         firstDate: this.firstDate != null ? this.firstDate : DateTime(1900),
         lastDate: this.lastDate != null ? this.lastDate : DateTime(2100));
     if (picked != null) {
@@ -33,6 +33,7 @@ class ButtonSelectDate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    this.selectedDate = this.selectedDate != null ? this.selectedDate : DateTime.now();
     return RaisedButton(
       child: Text(formatDateText()),
       onPressed: () {

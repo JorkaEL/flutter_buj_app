@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_buj_app/model/key_task.dart';
 import 'package:flutter_buj_app/model/task.dart';
 import 'package:flutter_buj_app/model/habit.dart';
-import 'package:logger/logger.dart';
 
 class BujService {
   BujService._internal();
@@ -15,10 +14,19 @@ class BujService {
     return _bujService;
   }
 
-  final logger = Logger();
+  final List<KeyTask> listKeyTask = [
+    KeyTask(id: 0, libelle: 'TODO', icon: Icons.mode_edit),
+    KeyTask(id: 0, libelle: 'Urgent', icon: Icons.priority_high),
+    KeyTask(id: 0, libelle: 'Evenement', icon: Icons.insert_invitation),
+    KeyTask(id: 0, libelle: 'Anniversaire', icon: Icons.cake),
+    KeyTask(id: 0, libelle: 'Réunion', icon: Icons.business_center),
+    KeyTask(id: 0, libelle: 'Déjeuner', icon: Icons.restaurant),
+    KeyTask(id: 0, libelle: 'Sortie', icon: Icons.nature_people)
+  ];
+  final List<Habit> listTracker = [
+    Habit(id: 0, color: Colors.grey, libelle: 'Aucune')
+  ];
   final List<Task> listTask = [];
-  final List<KeyTask> listKeyTask = [KeyTask(id: 0, libelle: 'TODO', icon: Icons.mode_edit ), KeyTask(id: 0, libelle: 'Urgent', icon: Icons.priority_high ), KeyTask(id: 0, libelle: 'Evenement', icon: Icons.insert_invitation ), KeyTask(id: 0, libelle: 'Anniversaire', icon: Icons.cake ),KeyTask(id: 0, libelle: 'Réunion', icon: Icons.business_center ), KeyTask(id: 0, libelle: 'Déjeuner', icon:Icons.restaurant ),KeyTask(id: 0, libelle: 'Sortie', icon: Icons.nature_people )];
-  final List<Habit> listTracker = [Habit(id: 0, color: Colors.grey, libelle: 'Aucune')];
 
   addTask(Task t) {
     listTask.add(t);
@@ -31,21 +39,21 @@ class BujService {
     return completer.future;
   }
 
-  Future<List<Task>> getTaskByDay(DateTime date) {
+  List<Task> getTaskByDay(DateTime date) {
     List<Task> tasks = [];
-    var completer = Completer<List<Task>>();
-
-    for(var t in listTask) {
+    for (var t in listTask) {
       if (date != null && t.date.isAtSameMomentAs(date)) {
         tasks.add(t);
       }
     }
-    completer.complete(tasks);
-    return completer.future;
+
+    return tasks;
   }
 
   updatStateTask(id) {
-    logger.i(id);
+    final index = listTask.indexWhere((element) => element.id == id);
+
+    listTask[index].state = !listTask[index].state;
   }
 
   List<Habit> getHabits() {
@@ -63,5 +71,4 @@ class BujService {
   addHabit(Habit h) {
     listTracker.add(h);
   }
-
 }

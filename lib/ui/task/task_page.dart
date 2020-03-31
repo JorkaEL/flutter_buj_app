@@ -6,14 +6,7 @@ import 'package:flutter_buj_app/util/routing_constants.dart';
 
 import 'component/task_body.component.dart';
 
-class TaskPage extends StatefulWidget {
-
-  @override
-  _TaskPageState createState() => _TaskPageState();
-}
-
-
-class _TaskPageState extends State {
+class TaskPage extends StatelessWidget {
   @override build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(

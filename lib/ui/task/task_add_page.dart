@@ -8,7 +8,6 @@ import 'package:flutter_buj_app/ui/task/component/task_add/task_add_dropdown.dar
 import 'package:flutter_buj_app/util/buj_service.dart';
 import 'package:flutter_buj_app/util/routing_constants.dart';
 import 'package:i18n_localizations/i18n_localizations.dart';
-import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 
 class TaskAddPage extends StatefulWidget {
@@ -77,20 +76,23 @@ class _TaskAddState extends State<TaskAddPage> {
                   TextFormField(
                     controller: this.libelle,
                     decoration: InputDecoration(
-                      hintText: I18nLocalizations.translate(context, 'task.add.libeler'),
+                      hintText: I18nLocalizations.translate(
+                          context, 'task.add.libeler'),
                     ),
                     // The validator receives the text that the user has entered.
                     validator: (value) {
                       if (value.isEmpty) {
-                        return I18nLocalizations.translate(context, 'error.task.add.libeler');
+                        return I18nLocalizations.translate(
+                            context, 'error.task.add.libeler');
                       }
                       return null;
                     },
                   ),
                   ButtonSelectDate(
-                      callback: (day) => changeDay(day),
-                      selectedDate: _selectedDate,
-                      formatDate: I18nLocalizations.translate(context, 'formatDate'),
+                    callback: (day) => changeDay(day),
+                    selectedDate: _selectedDate,
+                    formatDate:
+                        I18nLocalizations.translate(context, 'formatDate'),
                   ),
                   TaskAddDropdown(
                       keyList,
@@ -104,7 +106,8 @@ class _TaskAddState extends State<TaskAddPage> {
                       TaskAddDropdown(
                           habitList,
                           habitChoice,
-                          I18nLocalizations.translate(context, 'habit.dropdown'),
+                          I18nLocalizations.translate(
+                              context, 'habit.dropdown'),
                           'habit',
                           (hab) => changeHabit(hab)),
                       IconButton(
@@ -139,7 +142,8 @@ class _TaskAddState extends State<TaskAddPage> {
                               Navigator.pushNamed(context, TaskPageRoute);
                             }
                           },
-                          child: Text(I18nLocalizations.translate(context, 'actions.validate')),
+                          child: Text(I18nLocalizations.translate(
+                              context, 'actions.validate')),
                         ),
                       ]),
                 ],

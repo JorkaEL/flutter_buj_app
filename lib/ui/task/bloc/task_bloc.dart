@@ -1,12 +1,14 @@
 import 'dart:async';
 
-import 'package:flutter_buj_app/bloc/bloc_provider.dart';
+import 'package:flutter_buj_app/model/habit.dart';
+import 'package:flutter_buj_app/model/key_task.dart';
 import 'package:flutter_buj_app/model/task.dart';
 import 'package:flutter_buj_app/util/buj_service.dart';
+import 'package:flutter_buj_app/util/date_service.dart';
 
-class TaskBloc implements Bloc {
+class TaskBloc {
   List<Task> _listTask;
-  DateTime _selectedDate;
+  DateTime selectedDate;
 
   final _taskStateController = StreamController<Task>();
 
@@ -15,7 +17,7 @@ class TaskBloc implements Bloc {
 
   StreamSink<DateTime> get _inSelectedDate => _selectDateStateController.sink;
 
-  Stream<DateTime> get selectedDate => _selectDateStateController.stream;
+  Stream<DateTime> get selectedDateStream => _selectDateStateController.stream;
 
   final _selectedDateEventController = StreamController<DateTime>();
 
@@ -33,16 +35,16 @@ class TaskBloc implements Bloc {
   Sink<num> get updateTaskEventSink => _updateTaskEventController.sink;
 
   TaskBloc() {
-    final now = DateTime.now();
-    _selectedDate = DateTime(now.year, now.month, now.day);
+    selectedDate = DateService().selectedDate;
     _selectedDateEventController.stream.listen(_filterDay);
     _updateTaskEventController.stream.listen(_updateTask);
     updateList();
   }
 
   void _filterDay(DateTime day) {
-    _selectedDate = day;
-    _inSelectedDate.add(_selectedDate);
+    selectedDate = day;
+    DateService().selectedDate = selectedDate;
+    _inSelectedDate.add(selectedDate);
     updateList();
   }
 
@@ -52,11 +54,21 @@ class TaskBloc implements Bloc {
   }
 
   void updateList() {
-    _listTask = BujService().getTaskByDay(_selectedDate);
+    _listTask = BujService().getTaskByDay(selectedDate);
     _inListTask.add(_listTask);
   }
 
-  @override
+  void addTask(String libelle, Habit hab, KeyTask key) {
+    var t = Task(
+        libelle: libelle,
+        date: selectedDate,
+        id: 0,
+        state: false,
+        habit: hab,
+        key: key);
+    BujService().addTask(t);
+  }
+
   void dispose() {
     _taskStateController.close();
     _selectDateStateController.close();

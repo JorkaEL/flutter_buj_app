@@ -4,6 +4,7 @@ import 'package:flutter_buj_app/model/task.dart';
 import 'package:flutter_buj_app/model/habit.dart';
 import 'package:flutter_buj_app/model/key_task.dart';
 import 'package:flutter_buj_app/ui/component/button_select_date.dart';
+import 'package:flutter_buj_app/ui/task/bloc/task_bloc.dart';
 import 'package:flutter_buj_app/ui/task/component/task_add/task_add_dropdown.dart';
 import 'package:flutter_buj_app/util/buj_service.dart';
 import 'package:flutter_buj_app/util/routing_constants.dart';
@@ -18,9 +19,7 @@ class TaskAddPage extends StatefulWidget {
 class _TaskAddState extends State<TaskAddPage> {
   final logger = Logger();
   final _formKey = GlobalKey<FormState>();
-
-  static DateTime now = DateTime.now();
-  DateTime _selectedDate = DateTime(now.year, now.month, now.day);
+  final _bloc = TaskBloc();
 
   final libelle = TextEditingController();
 
@@ -29,12 +28,6 @@ class _TaskAddState extends State<TaskAddPage> {
 
   Habit habitChoice;
   List<Habit> habitList;
-
-  changeDay(DateTime day) {
-    setState(() {
-      _selectedDate = day;
-    });
-  }
 
   changeKeyTask(KeyTask keyTask) {
     setState(() {
@@ -53,6 +46,12 @@ class _TaskAddState extends State<TaskAddPage> {
     super.initState();
     this.habitList = BujService().getHabits();
     this.keyList = BujService().getKeyTask();
+  }
+
+  @override
+  void dispose() {
+    _bloc.dispose();
+    super.dispose();
   }
 
   @override
@@ -88,11 +87,17 @@ class _TaskAddState extends State<TaskAddPage> {
                       return null;
                     },
                   ),
-                  ButtonSelectDate(
-                    callback: (day) => changeDay(day),
-                    selectedDate: _selectedDate,
-                    formatDate:
-                        I18nLocalizations.translate(context, 'formatDate'),
+                  StreamBuilder(
+                    stream: _bloc.selectedDateStream,
+                    initialData: _bloc.selectedDate,
+                    builder: (context, snapshot) {
+                      return ButtonSelectDate(
+                        callback: (day) => _bloc.selectedDateEventSink.add(day),
+                        selectedDate: snapshot.data,
+                        formatDate:
+                            I18nLocalizations.translate(context, 'formatDate'),
+                      );
+                    }
                   ),
                   TaskAddDropdown(
                       keyList,
@@ -131,14 +136,7 @@ class _TaskAddState extends State<TaskAddPage> {
                                 this.keyChoice != null &&
                                 this.habitChoice != null) {
                               // Process data
-                              var t = Task(
-                                  libelle: this.libelle.text,
-                                  date: this._selectedDate,
-                                  id: 0,
-                                  state: false,
-                                  habit: this.habitChoice,
-                                  key: this.keyChoice);
-                              BujService().addTask(t);
+                              _bloc.addTask(this.libelle.text, this.habitChoice, this.keyChoice);
                               Navigator.pushNamed(context, TaskPageRoute);
                             }
                           },

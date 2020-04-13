@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_buj_app/model/task.dart';
 import 'package:flutter_buj_app/model/habit.dart';
 import 'package:flutter_buj_app/model/key_task.dart';
 import 'package:flutter_buj_app/ui/component/button_select_date.dart';
-import 'package:flutter_buj_app/ui/task/bloc/task_bloc.dart';
+import 'package:flutter_buj_app/ui/task/bloc/task_add_bloc.dart';
 import 'package:flutter_buj_app/ui/task/component/task_add/task_add_dropdown.dart';
-import 'package:flutter_buj_app/util/buj_service.dart';
 import 'package:flutter_buj_app/util/routing_constants.dart';
 import 'package:i18n_localizations/i18n_localizations.dart';
 import 'package:logger/logger.dart';
@@ -19,33 +17,13 @@ class TaskAddPage extends StatefulWidget {
 class _TaskAddState extends State<TaskAddPage> {
   final logger = Logger();
   final _formKey = GlobalKey<FormState>();
-  final _bloc = TaskBloc();
+  final _bloc = TaskAddBloc();
 
   final libelle = TextEditingController();
-
-  KeyTask keyChoice;
-  List<KeyTask> keyList;
-
-  Habit habitChoice;
-  List<Habit> habitList;
-
-  changeKeyTask(KeyTask keyTask) {
-    setState(() {
-      keyChoice = keyTask;
-    });
-  }
-
-  changeHabit(Habit hab) {
-    setState(() {
-      habitChoice = hab;
-    });
-  }
 
   @override
   void initState() {
     super.initState();
-    this.habitList = BujService().getHabits();
-    this.keyList = BujService().getKeyTask();
   }
 
   @override
@@ -88,33 +66,44 @@ class _TaskAddState extends State<TaskAddPage> {
                     },
                   ),
                   StreamBuilder(
-                    stream: _bloc.selectedDateStream,
-                    initialData: _bloc.selectedDate,
-                    builder: (context, snapshot) {
-                      return ButtonSelectDate(
-                        callback: (day) => _bloc.selectedDateEventSink.add(day),
-                        selectedDate: snapshot.data,
-                        formatDate:
-                            I18nLocalizations.translate(context, 'formatDate'),
-                      );
-                    }
-                  ),
-                  TaskAddDropdown(
-                      keyList,
-                      keyChoice,
-                      I18nLocalizations.translate(context, 'keyTask.dropdown'),
-                      'keyTask',
-                      (keyTask) => changeKeyTask(keyTask)),
+                      stream: _bloc.selectedDateStream,
+                      initialData: _bloc.selectedDate,
+                      builder: (context, snapshot) {
+                        return ButtonSelectDate(
+                          callback: (day) =>
+                              _bloc.selectedDateEventSink.add(day),
+                          selectedDate: snapshot.data,
+                          formatDate: I18nLocalizations.translate(
+                              context, 'formatDate'),
+                        );
+                      }),
+                  StreamBuilder<KeyTask>(
+                      stream: _bloc.keyChoiceStream,
+                      initialData: _bloc.keyChoice,
+                      builder: (context, snapshot) {
+                        return TaskAddDropdown(
+                            _bloc.keyList,
+                            snapshot.data,
+                            I18nLocalizations.translate(
+                                context, 'keyTask.dropdown'),
+                            'keyTask',
+                            (keyTask) => _bloc.keyTaskEventSink.add(keyTask));
+                      }),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      TaskAddDropdown(
-                          habitList,
-                          habitChoice,
-                          I18nLocalizations.translate(
-                              context, 'habit.dropdown'),
-                          'habit',
-                          (hab) => changeHabit(hab)),
+                      StreamBuilder<Habit>(
+                          stream: _bloc.habitChoiceStream,
+                          initialData: _bloc.habitChoice,
+                          builder: (context, snapshot) {
+                            return TaskAddDropdown(
+                                _bloc.habitList,
+                                snapshot.data,
+                                I18nLocalizations.translate(
+                                    context, 'habit.dropdown'),
+                                'habit',
+                                (hab) => _bloc.habitTaskEventSink.add(hab));
+                          }),
                       IconButton(
                         icon: Icon(Icons.add_circle),
                         color: Colors.deepPurple,
@@ -132,11 +121,12 @@ class _TaskAddState extends State<TaskAddPage> {
                           color: Colors.deepPurple,
                           textColor: Colors.white,
                           onPressed: () {
-                            if (_formKey.currentState.validate() &&
-                                this.keyChoice != null &&
-                                this.habitChoice != null) {
+                            if (_formKey.currentState.validate() // &&
+                                // this.keyChoice != null &&
+                                //this.habitChoice != null
+                                ) {
                               // Process data
-                              _bloc.addTask(this.libelle.text, this.habitChoice, this.keyChoice);
+                              _bloc.addTask(this.libelle.text);
                               Navigator.pushNamed(context, TaskPageRoute);
                             }
                           },

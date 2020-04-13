@@ -1,16 +1,15 @@
 import 'dart:async';
 
-import 'package:flutter_buj_app/model/habit.dart';
-import 'package:flutter_buj_app/model/key_task.dart';
 import 'package:flutter_buj_app/model/task.dart';
 import 'package:flutter_buj_app/util/buj_service.dart';
 import 'package:flutter_buj_app/util/date_service.dart';
 
 class TaskBloc {
-  List<Task> _listTask;
+
   DateTime selectedDate;
 
-  final _taskStateController = StreamController<Task>();
+  List<Task> _listTask;
+
 
   /// Stream pour la date du filtre
   final _selectDateStateController = StreamController<DateTime>();
@@ -35,6 +34,22 @@ class TaskBloc {
   Sink<num> get updateTaskEventSink => _updateTaskEventController.sink;
 
   TaskBloc() {
+    _initBloc();
+  }
+
+  void updateList() {
+    _listTask = BujService().getTaskByDay(selectedDate);
+    _inListTask.add(_listTask);
+  }
+
+  void dispose() {
+    _selectDateStateController.close();
+    _selectedDateEventController.close();
+    _listTaskStateController.close();
+    _updateTaskEventController.close();
+  }
+
+  void _initBloc() {
     selectedDate = DateService().selectedDate;
     _selectedDateEventController.stream.listen(_filterDay);
     _updateTaskEventController.stream.listen(_updateTask);
@@ -51,29 +66,5 @@ class TaskBloc {
   void _updateTask(num id) {
     BujService().updatStateTask(id);
     updateList();
-  }
-
-  void updateList() {
-    _listTask = BujService().getTaskByDay(selectedDate);
-    _inListTask.add(_listTask);
-  }
-
-  void addTask(String libelle, Habit hab, KeyTask key) {
-    var t = Task(
-        libelle: libelle,
-        date: selectedDate,
-        id: 0,
-        state: false,
-        habit: hab,
-        key: key);
-    BujService().addTask(t);
-  }
-
-  void dispose() {
-    _taskStateController.close();
-    _selectDateStateController.close();
-    _selectedDateEventController.close();
-    _listTaskStateController.close();
-    _updateTaskEventController.close();
   }
 }

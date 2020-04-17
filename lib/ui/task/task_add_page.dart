@@ -16,10 +16,7 @@ class TaskAddPage extends StatefulWidget {
 
 class _TaskAddState extends State<TaskAddPage> {
   final logger = Logger();
-  final _formKey = GlobalKey<FormState>();
   final _bloc = TaskAddBloc();
-
-  final libelle = TextEditingController();
 
   @override
   void initState() {
@@ -43,27 +40,33 @@ class _TaskAddState extends State<TaskAddPage> {
           centerTitle: true,
           title: Text(I18nLocalizations.translate(context, 'task.add.title'))),
       body: Form(
-          key: _formKey,
+          key: _bloc.formKey,
           child: Container(
               padding:
                   EdgeInsetsDirectional.only(start: 15.0, top: 5.0, end: 15.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  TextFormField(
-                    controller: this.libelle,
-                    decoration: InputDecoration(
-                      hintText: I18nLocalizations.translate(
-                          context, 'task.add.libeler'),
-                    ),
-                    // The validator receives the text that the user has entered.
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return I18nLocalizations.translate(
-                            context, 'error.task.add.libeler');
-                      }
-                      return null;
-                    },
+                  StreamBuilder<TextEditingController>(
+                    stream: _bloc.libellerStream,
+                    builder: (context, snapshot) {
+                      return TextFormField(
+                        controller: snapshot.data,
+                        onChanged: _bloc.libellerEventSink,
+                        decoration: InputDecoration(
+                          hintText: I18nLocalizations.translate(
+                              context, 'task.add.libeler'),
+                        ),
+                        // The validator receives the text that the user has entered.
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return I18nLocalizations.translate(
+                                context, 'error.task.add.libeler');
+                          }
+                          return null;
+                        },
+                      );
+                    }
                   ),
                   StreamBuilder(
                       stream: _bloc.selectedDateStream,
@@ -121,14 +124,8 @@ class _TaskAddState extends State<TaskAddPage> {
                           color: Colors.deepPurple,
                           textColor: Colors.white,
                           onPressed: () {
-                            if (_formKey.currentState.validate() // &&
-                                // this.keyChoice != null &&
-                                //this.habitChoice != null
-                                ) {
                               // Process data
-                              _bloc.addTask(this.libelle.text);
-                              Navigator.pushNamed(context, TaskPageRoute);
-                            }
+                              _bloc.addTask(context);
                           },
                           child: Text(I18nLocalizations.translate(
                               context, 'actions.validate')),

@@ -36,6 +36,7 @@
       }
     },
     "habit": {
+      "list": "Une erreur est survenue",
       "add": {
         "libeler": "pleas enter a libeller"
       }

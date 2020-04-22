@@ -3,61 +3,35 @@ import 'package:i18n_localizations/i18n_localizations.dart';
 import 'package:flutter_buj_app/model/task.dart';
 import 'package:flutter_buj_app/util/buj_service.dart';
 
-class TaskList extends StatefulWidget {
-  TaskList({Key key, @required this.listTasks}) : super(key: key);
+typedef NumCallBack(num id);
 
-  final Future<List<Task>> listTasks;
-  var tasks = [];
+class TaskList extends StatelessWidget {
+  final NumCallBack callback;
+  final List<Task> listTasks;
+
+  TaskList({this.callback, this.listTasks});
 
   @override
-  _TaskListState createState() {
-    return new _TaskListState();
-  }
-}
-
-class _TaskListState extends State<TaskList> {
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Task>>(
-      future: widget.listTasks,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Center(
-            child: Text(I18nLocalizations.translate(context,"error.task.list")),
-          );
-        } else {
-          widget.tasks = [];
-          if (snapshot.hasData) {
-            widget.tasks = snapshot.data;
-          }
-          return ListView.separated(
-            scrollDirection: Axis.vertical,
-            separatorBuilder: (context, index) => Divider(),
-            itemCount: widget.tasks.length,
-            itemBuilder: (context, index) => ListTile(
-              leading: IconButton(
-                icon: Icon(widget.tasks[index].state
-                    ? Icons.check_box
-                    : Icons.check_box_outline_blank),
-                onPressed: () {
-                  setState(() {
-                    BujService().updatStateTask(widget.tasks[index].id);
-                    widget.tasks[index].state = !widget.tasks[index].state;
-                  });
-                },
-              ),
-              title: Text(widget.tasks[index].libelle),
-              trailing: Icon(widget.tasks[index].key.icon,
-                  color: widget.tasks[index].habit.color),
-              onTap: () {
-                setState(() {
-                  BujService().updatStateTask(widget.tasks[index].id);
-                  widget.tasks[index].state = !widget.tasks[index].state;
-                });
-              },
-            ),
-          );
-        }
-      },
+    return ListView.separated(
+      scrollDirection: Axis.vertical,
+      separatorBuilder: (context, index) => Divider(),
+      itemCount: listTasks.length,
+      itemBuilder: (context, index) => ListTile(
+        leading: IconButton(
+          icon: Icon(listTasks[index].state
+              ? Icons.check_box
+              : Icons.check_box_outline_blank),
+          onPressed: () {
+            callback(listTasks[index].id);
+          },
+        ),
+        title: Text(listTasks[index].libelle),
+        trailing: Icon(listTasks[index].key.icon, color: listTasks[index].habit.color),
+        onTap: () {
+          callback(listTasks[index].id);
+        },
+      ),
     );
   }
 }

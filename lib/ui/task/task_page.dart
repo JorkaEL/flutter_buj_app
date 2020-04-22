@@ -6,30 +6,22 @@ import 'package:flutter_buj_app/util/routing_constants.dart';
 
 import 'component/task_body.component.dart';
 
-class TaskPage extends StatefulWidget {
-
+class TaskPage extends StatelessWidget {
   @override
-  _TaskPageState createState() => _TaskPageState();
-}
-
-
-class _TaskPageState extends State {
-  @override build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+            backgroundColor: Colors.deepPurple,
+            centerTitle: true,
+            title: Text(I18nLocalizations.translate(context, "task.title"))),
+        drawer: SideMenu(),
+        body: TaskBody(),
+        floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.deepPurple,
-          centerTitle: true,
-          title: Text(I18nLocalizations.translate(context,"task.title"))
-        ),
-      drawer: SideMenu(),
-      body: TaskBody(),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.deepPurple,
-        onPressed: () {
-          Navigator.pushNamed(context, TaskAddPageRoute);
-        },
-        child: Icon(Icons.add),
-      )
-    );
+          onPressed: () {
+            Navigator.pushNamed(context, TaskAddPageRoute);
+          },
+          child: Icon(Icons.add),
+        ));
   }
 }

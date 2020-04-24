@@ -6,8 +6,6 @@
   },
   "task": {
     "title": "Taches",
-    "week" : "Semaine",
-    "month": "Mois",
     "add": {
       "title": "Ajout de tache",
       "libeler": "Libéller de la tache"
@@ -43,5 +41,8 @@
     },
     "page": "La route pour {name} n'est pas définie."
   },
-  "formatDate": "dd-MM-yyyy"
+  "formatDate": "dd-MM-yyyy",
+  "day": "Jour",
+  "week" : "Semaine",
+  "month": "Mois"
 }

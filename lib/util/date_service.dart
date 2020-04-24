@@ -1,5 +1,9 @@
 
-
+enum typeDate {
+  day,
+  week,
+  month
+}
 
 class DateService {
   DateService._internal();

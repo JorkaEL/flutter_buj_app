@@ -2,14 +2,16 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_buj_app/model/button_select_date.dart';
+import 'package:flutter_buj_app/util/date_service.dart';
 import 'package:i18n_localizations/i18n_localizations.dart';
 import 'package:flutter_buj_app/ui/component/button_select_date.dart';
 
-typedef DateCallBack(DateTime val);
+typedef DateCallBack(ButtonSelectDateModel val);
 
 class TaskHeader extends StatelessWidget {
   final DateCallBack callback;
-  DateTime selectedDate;
+  ButtonSelectDateModel selectedDate;
   TaskHeader({this.callback, this.selectedDate});
 
   @override
@@ -22,13 +24,23 @@ class TaskHeader extends StatelessWidget {
           ButtonSelectDate(
               callback: callback,
               selectedDate: selectedDate,
+              defaultText: I18nLocalizations.translate(context, 'day'),
+              typeDate: typeDate.day,
               formatDate: I18nLocalizations.translate(context, 'formatDate'),
           ),
-          RaisedButton(
-            child: Text(I18nLocalizations.translate(context, 'task.week')),
+          ButtonSelectDate(
+            callback: callback,
+            selectedDate: selectedDate,
+            defaultText: I18nLocalizations.translate(context, 'week'),
+            typeDate: typeDate.week,
+            formatDate: I18nLocalizations.translate(context, 'formatDate'),
           ),
-          RaisedButton(
-            child: Text(I18nLocalizations.translate(context, 'task.month')),
+          ButtonSelectDate(
+            callback: callback,
+            selectedDate: selectedDate,
+            defaultText: I18nLocalizations.translate(context, 'month'),
+            typeDate: typeDate.month,
+            formatDate: I18nLocalizations.translate(context, 'formatDate'),
           ),
         ],
       ),

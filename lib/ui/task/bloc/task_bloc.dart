@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_buj_app/model/button_select_date.dart';
-import 'package:flutter_buj_app/model/task.dart';
+import 'package:flutter_buj_app/model/item_task_bloc.dart';
 import 'package:flutter_buj_app/util/buj_service.dart';
 import 'package:flutter_buj_app/util/date_service.dart';
 
@@ -9,7 +9,7 @@ class TaskBloc {
 
   ButtonSelectDateModel selectedDate = ButtonSelectDateModel();
 
-  List<Task> _listTask;
+  ItemTaskBloc itemBloc;
 
 
   /// Stream pour la date du filtre
@@ -24,11 +24,11 @@ class TaskBloc {
   Sink<ButtonSelectDateModel> get selectedDateEventSink => _selectedDateEventController.sink;
 
   /// Stream pour la list des task
-  final _listTaskStateController = StreamController<List<Task>>();
+  final _listTaskStateController = StreamController<ItemTaskBloc>();
 
-  StreamSink<List<Task>> get _inListTask => _listTaskStateController.sink;
+  StreamSink<ItemTaskBloc> get _inListTask => _listTaskStateController.sink;
 
-  Stream<List<Task>> get listTask => _listTaskStateController.stream;
+  Stream<ItemTaskBloc> get listTask => _listTaskStateController.stream;
 
   final _updateTaskEventController = StreamController<num>();
 
@@ -39,8 +39,15 @@ class TaskBloc {
   }
 
   void updateList() {
-    _listTask = BujService().getTaskByDay(selectedDate.date);
-    _inListTask.add(_listTask);
+
+    if(selectedDate.typeDate == typeDate.day) {
+      itemBloc.isWeek = false;
+      itemBloc.dayTask = BujService().getTaskByDay(selectedDate.date);
+    } else if(selectedDate.typeDate == typeDate.week) {
+      itemBloc.isWeek = true;
+      itemBloc.weekTask = BujService().getTasksByWeek(selectedDate.date);
+    }
+    _inListTask.add(itemBloc);
   }
 
   void dispose() {
@@ -52,6 +59,7 @@ class TaskBloc {
 
   void _initBloc() {
     selectedDate.date = DateService().selectedDate;
+    itemBloc = new ItemTaskBloc();
     selectedDate.typeDate = typeDate.day;
     _selectedDateEventController.stream.listen(_filterDay);
     _updateTaskEventController.stream.listen(_updateTask);

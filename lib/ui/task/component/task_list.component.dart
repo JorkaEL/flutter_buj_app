@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:i18n_localizations/i18n_localizations.dart';
 import 'package:flutter_buj_app/model/task.dart';
-import 'package:flutter_buj_app/util/buj_service.dart';
 
 typedef NumCallBack(num id);
 
@@ -15,6 +13,7 @@ class TaskList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
       scrollDirection: Axis.vertical,
+      shrinkWrap: true,
       separatorBuilder: (context, index) => Divider(),
       itemCount: listTasks.length,
       itemBuilder: (context, index) => ListTile(

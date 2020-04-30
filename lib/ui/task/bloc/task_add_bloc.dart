@@ -14,7 +14,7 @@ class TaskAddBloc {
 
   TextEditingController libellerController;
 
-  ButtonSelectDateModel selectedDate;
+  ButtonSelectDateModel selectedDate = ButtonSelectDateModel();
 
   /// clée d'une tâche
   KeyTask keyChoice;

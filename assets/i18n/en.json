@@ -44,5 +44,14 @@
   "formatDate": "yyyy-MM-dd",
   "day": "Day",
   "week" : "Week",
-  "month": "Month"
+  "month": "Month",
+  "numberDay": {
+    "1": "Monday {date}",
+    "2": "Tuesday {date}",
+    "3": "Wednesday {date}",
+    "4": "Thursday {date}",
+    "5": "Friday {date}",
+    "6": "Saturday {date}",
+    "7": "Sunday {date}"
+  }
 }

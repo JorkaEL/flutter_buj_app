@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_buj_app/model/day_week.dart';
 import 'package:flutter_buj_app/model/key_task.dart';
 import 'package:flutter_buj_app/model/task.dart';
 import 'package:flutter_buj_app/model/habit.dart';
+import 'package:flutter_buj_app/util/date_service.dart';
 
 class BujService {
   BujService._internal();
@@ -28,7 +30,7 @@ class BujService {
   ];
   final List<Task> listTask = [];
 
-  addTask(Task t) {
+  void addTask(Task t) {
     listTask.add(t);
   }
 
@@ -50,7 +52,18 @@ class BujService {
     return tasks;
   }
 
-  updatStateTask(id) {
+  List<DayWeek> getTasksByWeek(DateTime date) {
+    List<DateTime> listDate = DateService().datesWeek(date);
+    List<DayWeek> weekTasks = [];
+
+    for (var d in listDate) {
+      weekTasks.add(new DayWeek(date: d, tasks: getTaskByDay(d)));
+    }
+
+    return weekTasks;
+  }
+
+  void updatStateTask(id) {
     final index = listTask.indexWhere((element) => element.id == id);
 
     listTask[index].state = !listTask[index].state;
@@ -64,11 +77,11 @@ class BujService {
     return listKeyTask;
   }
 
-  addKeyTask(KeyTask k) {
+  void addKeyTask(KeyTask k) {
     listKeyTask.add(k);
   }
 
-  addHabit(Habit h) {
+  void addHabit(Habit h) {
     listTracker.add(h);
   }
 }

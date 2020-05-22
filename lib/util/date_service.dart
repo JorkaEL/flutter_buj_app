@@ -1,3 +1,4 @@
+import 'package:flutter_buj_app/model/button_select_date.dart';
 import 'package:intl/intl.dart';
 
 enum typeDate {
@@ -18,29 +19,23 @@ class DateService {
   static DateTime _now = DateTime.now();
   final int firstDayWeek = 1;
   final int lastDayWeek = 7;
-  DateTime _selectedDate = DateTime(_now.year, _now.month, _now.day);
+  ButtonSelectDateModel _selectedDate = ButtonSelectDateModel(date: DateTime(_now.year, _now.month, _now.day), typeDate: typeDate.day);
 
-  DateTime get selectedDate => _selectedDate;
+  ButtonSelectDateModel get selectedDate => _selectedDate;
 
 
-  set selectedDate(DateTime date) {
+  set selectedDate(ButtonSelectDateModel date) {
     _selectedDate = date;
   }
 
 
   List<DateTime> datesWeek(DateTime date) {
-    int nbDay = date.weekday;
-    List<DateTime> week = [date];
+    DateTime monday = date.subtract(Duration(days: date.weekday - 1));
+    List<DateTime> week = [monday];
 
-    for(int i=nbDay; i > firstDayWeek; i--) {
-      week.add(date.subtract(Duration(days: nbDay - i + firstDayWeek)));
+    for(int i=firstDayWeek; i < lastDayWeek; i++) {
+      week.add(monday.add(Duration(days: i)));
     }
-
-    for(int i=nbDay; i < lastDayWeek; i++) {
-      week.add(date.add(Duration(days: i - nbDay + firstDayWeek)));
-    }
-
-    week.sort((a,b) => a.weekday - b .weekday);
 
     return week;
   }

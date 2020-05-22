@@ -4,5 +4,5 @@ class ButtonSelectDateModel {
   DateTime date;
   var typeDate;
 
-  ButtonSelectDateModel();
+  ButtonSelectDateModel({this.date, this.typeDate});
 }

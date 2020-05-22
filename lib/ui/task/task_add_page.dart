@@ -78,7 +78,7 @@ class _TaskAddState extends State<TaskAddPage> {
                               _bloc.selectedDateEventSink.add(day),
                           selectedDate: snapshot.data,
                           defaultText: I18nLocalizations.translate(context, 'day'),
-                          typeDate: typeDate.day,
+                          typeDate: snapshot.data.typeDate,
                           formatDate: I18nLocalizations.translate(
                               context, 'formatDate'),
                         );

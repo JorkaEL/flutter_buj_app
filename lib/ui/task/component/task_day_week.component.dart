@@ -23,29 +23,27 @@ class TaskDayWeek extends StatelessWidget {
                     I18nLocalizations.translate(context, 'formatDate'))
               })),
         ),
-        ListView.builder(
+        ListView.separated(
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
           itemCount: day.tasks.length,
-          itemBuilder: (context, index) => Column(
-            children: <Widget>[
-              ListTile(
-                leading: IconButton(
-                  icon: Icon(day.tasks[index].state
-                      ? Icons.check_box
-                      : Icons.check_box_outline_blank),
-                  onPressed: () {
-                    callback(day.tasks[index].id);
-                  },
-                ),
-                title: Text(day.tasks[index].libelle),
-                trailing: Icon(day.tasks[index].key.icon,
-                    color: day.tasks[index].habit.color),
-                onTap: () {
-                  callback(day.tasks[index].id);
-                },
-              ),
-            ],
+          physics: PageScrollPhysics(),
+          separatorBuilder: (context, index) => Divider(),
+          itemBuilder: (context, index) => ListTile(
+            leading: IconButton(
+              icon: Icon(day.tasks[index].state
+                  ? Icons.check_box
+                  : Icons.check_box_outline_blank),
+              onPressed: () {
+                callback(day.tasks[index].id);
+              },
+            ),
+            title: Text(day.tasks[index].libelle),
+            trailing: Icon(day.tasks[index].key.icon,
+                color: day.tasks[index].habit.color),
+            onTap: () {
+              callback(day.tasks[index].id);
+            },
           ),
         ),
       ],

@@ -111,8 +111,7 @@ class TaskAddBloc {
 
   void _initBloc() {
     libellerController = TextEditingController();
-    selectedDate.date = DateService().selectedDate;
-    selectedDate.typeDate = typeDate.day;
+    selectedDate = DateService().selectedDate;
     keyList = BujService().getKeyTask();
     habitList = BujService().getHabits();
     _updateLibeller('');
@@ -130,7 +129,7 @@ class TaskAddBloc {
 
   void _updateDay(ButtonSelectDateModel obj) {
     selectedDate = obj;
-    DateService().selectedDate = selectedDate.date;
+    DateService().selectedDate = selectedDate;
     _inSelectedDate.add(selectedDate);
   }
 

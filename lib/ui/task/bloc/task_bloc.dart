@@ -58,9 +58,8 @@ class TaskBloc {
   }
 
   void _initBloc() {
-    selectedDate.date = DateService().selectedDate;
+    selectedDate = DateService().selectedDate;
     itemBloc = new ItemTaskBloc();
-    selectedDate.typeDate = typeDate.day;
     _selectedDateEventController.stream.listen(_filterDay);
     _updateTaskEventController.stream.listen(_updateTask);
     updateList();
@@ -68,7 +67,7 @@ class TaskBloc {
 
   void _filterDay(ButtonSelectDateModel obj) {
     selectedDate = obj;
-    DateService().selectedDate = selectedDate.date;
+    DateService().selectedDate = selectedDate;
 
     _inSelectedDate.add(selectedDate);
     updateList();

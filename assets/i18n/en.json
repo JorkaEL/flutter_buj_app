@@ -21,7 +21,16 @@
     }
   },
   "keyTask" : {
-    "dropdown": "Select your key"
+    "dropdown": "Select your key",
+    "key": {
+      "todo": "TODO",
+      "urgent": "Urgent",
+      "event": "Event",
+      "birthDay": "Birthday",
+      "meeting": "Meeting",
+      "lunch": "Lunch",
+      "goOut": "go Out"
+    }
   },
   "actions" : {
     "validate": "Validate"

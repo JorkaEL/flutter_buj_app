@@ -5,6 +5,7 @@ import 'package:flutter_buj_app/model/key_task.dart';
 import 'package:flutter_buj_app/ui/component/button_select_date.dart';
 import 'package:flutter_buj_app/ui/task/bloc/task_add_bloc.dart';
 import 'package:flutter_buj_app/ui/task/component/task_add/task_add_dropdown.dart';
+import 'package:flutter_buj_app/util/date_service.dart';
 import 'package:flutter_buj_app/util/routing_constants.dart';
 import 'package:i18n_localizations/i18n_localizations.dart';
 import 'package:logger/logger.dart';
@@ -76,6 +77,8 @@ class _TaskAddState extends State<TaskAddPage> {
                           callback: (day) =>
                               _bloc.selectedDateEventSink.add(day),
                           selectedDate: snapshot.data,
+                          defaultText: I18nLocalizations.translate(context, 'day'),
+                          typeDate: snapshot.data.typeDate,
                           formatDate: I18nLocalizations.translate(
                               context, 'formatDate'),
                         );

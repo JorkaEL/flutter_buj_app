@@ -6,8 +6,6 @@
   },
   "task": {
     "title": "Task",
-    "week" : "Week",
-    "month": "Month",
     "add": {
       "title": "Add Task",
       "libeler": "Libeller of task"
@@ -43,5 +41,17 @@
     },
     "page": "Route for {name} is not defined."
   },
-  "formatDate": "yyyy-MM-dd"
+  "formatDate": "yyyy-MM-dd",
+  "day": "Day",
+  "week" : "Week",
+  "month": "Month",
+  "numberDay": {
+    "1": "Monday {date}",
+    "2": "Tuesday {date}",
+    "3": "Wednesday {date}",
+    "4": "Thursday {date}",
+    "5": "Friday {date}",
+    "6": "Saturday {date}",
+    "7": "Sunday {date}"
+  }
 }

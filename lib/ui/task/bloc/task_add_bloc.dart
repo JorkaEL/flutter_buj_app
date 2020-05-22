@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_buj_app/model/button_select_date.dart';
 import 'package:flutter_buj_app/model/habit.dart';
 import 'package:flutter_buj_app/model/key_task.dart';
 import 'package:flutter_buj_app/model/task.dart';
@@ -13,7 +14,7 @@ class TaskAddBloc {
 
   TextEditingController libellerController;
 
-  DateTime selectedDate;
+  ButtonSelectDateModel selectedDate = ButtonSelectDateModel();
 
   /// clée d'une tâche
   KeyTask keyChoice;
@@ -62,15 +63,15 @@ class TaskAddBloc {
   final _taskStateController = StreamController<Task>();
 
   /// Stream pour la date de la tâche
-  final _selectDateStateController = StreamController<DateTime>();
+  final _selectDateStateController = StreamController<ButtonSelectDateModel>();
 
-  StreamSink<DateTime> get _inSelectedDate => _selectDateStateController.sink;
+  StreamSink<ButtonSelectDateModel> get _inSelectedDate => _selectDateStateController.sink;
 
-  Stream<DateTime> get selectedDateStream => _selectDateStateController.stream;
+  Stream<ButtonSelectDateModel> get selectedDateStream => _selectDateStateController.stream;
 
-  final _selectedDateEventController = StreamController<DateTime>();
+  final _selectedDateEventController = StreamController<ButtonSelectDateModel>();
 
-  Sink<DateTime> get selectedDateEventSink => _selectedDateEventController.sink;
+  Sink<ButtonSelectDateModel> get selectedDateEventSink => _selectedDateEventController.sink;
 
   TaskAddBloc() {
     _initBloc();
@@ -82,7 +83,7 @@ class TaskAddBloc {
         habitChoice != null) {
       var t = Task(
           libelle: libellerController.text,
-          date: selectedDate,
+          date: selectedDate.date,
           id: 0,
           state: false,
           habit: habitChoice,
@@ -126,8 +127,8 @@ class TaskAddBloc {
     _libeller.add(libellerController);
   }
 
-  void _updateDay(DateTime day) {
-    selectedDate = day;
+  void _updateDay(ButtonSelectDateModel obj) {
+    selectedDate = obj;
     DateService().selectedDate = selectedDate;
     _inSelectedDate.add(selectedDate);
   }
